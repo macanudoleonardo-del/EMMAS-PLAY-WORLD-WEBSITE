@@ -20,7 +20,7 @@
      Any element missing a translation falls back to English,
      so a half-translated language still renders cleanly.
   ── */
-  var LANGS = ['en', 'es', 'zh', 'ko'];
+  var LANGS = ['en', 'es', 'fr', 'zh', 'ko'];
 
   function applyLang(lang) {
     if (LANGS.indexOf(lang) === -1) lang = 'en';
@@ -53,6 +53,7 @@
   if (!savedLang) {
     var nav = (navigator.language || 'en').toLowerCase();
     savedLang = nav.indexOf('es') === 0 ? 'es'
+              : nav.indexOf('fr') === 0 ? 'fr'
               : nav.indexOf('zh') === 0 ? 'zh'
               : nav.indexOf('ko') === 0 ? 'ko'
               : 'en';
@@ -106,13 +107,15 @@
     en: '⚠ Form not connected yet — hook up Resend/WhatsApp (see MARKETING.md).',
     es: '⚠ Formulario aún no conectado — configura Resend/WhatsApp (ver MARKETING.md).',
     zh: '⚠ 表单尚未连接——请配置 Resend/WhatsApp（见 MARKETING.md）。',
-    ko: '⚠ 폼이 아직 연결되지 않았어요 — Resend/WhatsApp를 연결하세요 (MARKETING.md 참고).'
+    ko: '⚠ 폼이 아직 연결되지 않았어요 — Resend/WhatsApp를 연결하세요 (MARKETING.md 참고).',
+    fr: '⚠ Formulaire pas encore connecté — configurez Resend/WhatsApp (voir MARKETING.md).'
   };
   var FILL = {
     en: 'Please fill in the required fields.',
     es: 'Por favor completa los campos requeridos.',
     zh: '请填写必填项。',
-    ko: '필수 항목을 입력해 주세요.'
+    ko: '필수 항목을 입력해 주세요.',
+    fr: 'Veuillez remplir les champs obligatoires.'
   };
 
   if (form && msg) {
