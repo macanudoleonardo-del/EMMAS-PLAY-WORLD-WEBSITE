@@ -14,6 +14,5 @@ node_modules/
 *.MP4
 *.mov
 *.MOV
-# ...except the short featured clips embedded on the site:
-!media/emma-1.mp4
-!media/emma-2.mp4
+# ...except short clips placed in media/ and embedded on the site:
+!media/*.mp4
