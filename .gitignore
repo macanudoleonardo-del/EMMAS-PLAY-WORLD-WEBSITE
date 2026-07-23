@@ -1,0 +1,16 @@
+# Local preview server (temporary)
+_serve.js
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+node_modules/
+
+# Keep heavy video out of the site repo — host big video on YouTube/TikTok/CDN,
+# not in git. (Images like logo.png / *.jpg are fine and NOT ignored.)
+*.mp4
+*.MP4
+*.mov
+*.MOV

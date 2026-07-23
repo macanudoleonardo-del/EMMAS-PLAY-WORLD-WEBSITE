@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Emma's Play World sitemap.
+     🔲 Replace emmasplayworld.com if your final domain differs,
+     update <lastmod>, and add a URL entry for each real page as the
+     site grows (e.g. a dedicated /es/ Spanish page, /press). -->
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://emmasplayworld.com/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emmasplayworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://emmasplayworld.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emmasplayworld.com/"/>
+  </url>
+</urlset>
