@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Emma's Play World sitemap.
-     🔲 Replace emmasplayworld.com if your final domain differs,
-     update <lastmod>, and add a URL entry for each real page as the
-     site grows (e.g. a dedicated /es/ Spanish page, /press). -->
-<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!-- Emma's Play World sitemap — homepage + one page per language for international SEO. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://emmasplayworld.com/</loc>
     <lastmod>2026-07-23</lastmod>
@@ -12,6 +8,57 @@
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://emmasplayworld.com/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://emmasplayworld.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emmasplayworld.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://emmasplayworld.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://emmasplayworld.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emmasplayworld.com/"/>
+  </url>
+  <url>
+    <loc>https://emmasplayworld.com/es/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emmasplayworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://emmasplayworld.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emmasplayworld.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://emmasplayworld.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://emmasplayworld.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emmasplayworld.com/"/>
+  </url>
+  <url>
+    <loc>https://emmasplayworld.com/fr/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emmasplayworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://emmasplayworld.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emmasplayworld.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://emmasplayworld.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://emmasplayworld.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emmasplayworld.com/"/>
+  </url>
+  <url>
+    <loc>https://emmasplayworld.com/zh/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emmasplayworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://emmasplayworld.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emmasplayworld.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://emmasplayworld.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://emmasplayworld.com/ko/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://emmasplayworld.com/"/>
+  </url>
+  <url>
+    <loc>https://emmasplayworld.com/ko/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://emmasplayworld.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://emmasplayworld.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://emmasplayworld.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://emmasplayworld.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://emmasplayworld.com/ko/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://emmasplayworld.com/"/>
   </url>
 </urlset>

@@ -48,15 +48,22 @@
     langSel.addEventListener('change', function () { applyLang(langSel.value); });
   }
 
-  // saved choice wins; otherwise follow the browser
+  // saved choice wins; else this page's own language (pre-rendered /es/ /fr/ …);
+  // else follow the browser.
   var savedLang = store.get('epw-lang');
   if (!savedLang) {
-    var nav = (navigator.language || 'en').toLowerCase();
-    savedLang = nav.indexOf('es') === 0 ? 'es'
-              : nav.indexOf('fr') === 0 ? 'fr'
-              : nav.indexOf('zh') === 0 ? 'zh'
-              : nav.indexOf('ko') === 0 ? 'ko'
-              : 'en';
+    var pageMeta = document.querySelector('meta[name="epw-lang"]');
+    var pageLang = pageMeta && pageMeta.getAttribute('content');
+    if (pageLang && LANGS.indexOf(pageLang) !== -1) {
+      savedLang = pageLang;
+    } else {
+      var nav = (navigator.language || 'en').toLowerCase();
+      savedLang = nav.indexOf('es') === 0 ? 'es'
+                : nav.indexOf('fr') === 0 ? 'fr'
+                : nav.indexOf('zh') === 0 ? 'zh'
+                : nav.indexOf('ko') === 0 ? 'ko'
+                : 'en';
+    }
   }
   applyLang(savedLang);
 
