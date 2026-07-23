@@ -3,7 +3,7 @@
 Official website for **Emma's Play World** — a parent-managed, multilingual children's movement led by Emma, a premature-heart survivor and little global leader. *Love Creates Harmony.*
 
 - 🌐 Live: https://emmasplayworld.com
-- 🗣️ Languages: English · Español · 中文 · 한국어 (header dropdown, English fallback)
+- 🗣️ Languages: English · Español · Français · 中文 · 한국어 (header dropdown, English fallback)
 - ⚙️ Static site — HTML / CSS / JS, **no build step**, no dependencies.
 
 ## Files
