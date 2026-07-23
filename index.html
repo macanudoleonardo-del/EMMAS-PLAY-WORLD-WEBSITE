@@ -37,10 +37,10 @@
 
 <meta name="theme-color" content="#FF3EA5">
 
-<!-- favicons (SVG star fallback works immediately; logo.png used once added) -->
+<!-- favicons: real logo.jpg + SVG star fallback -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l4 9 10 .8-7.6 6.4 2.4 9.8L16 22.6 7.2 28l2.4-9.8L2 11.8 12 11z' fill='%23FF3EA5'/%3E%3C/svg%3E">
-<link rel="icon" href="images/logo.png" sizes="any">
-<link rel="apple-touch-icon" href="images/logo.png">
+<link rel="icon" href="images/logo.jpg" sizes="any">
+<link rel="apple-touch-icon" href="images/logo.jpg">
 <link rel="manifest" href="manifest.webmanifest">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,7 +92,7 @@
   <div class="wrap nav__inner">
     <a class="brand" href="#top" aria-label="Emma's Play World home">
       <span class="brand__mark" aria-hidden="true">
-        <img class="brand__logo" src="images/logo.png" alt="" onerror="this.remove()">
+        <img class="brand__logo" src="images/logo.jpg" alt="" onerror="this.remove()">
       </span>
       <span class="brand__text">Emma's <em>Play World</em></span>
     </a>
@@ -252,6 +252,21 @@
     <p class="kicker" data-en="Watch" data-es="Videos" data-zh="观看" data-ko="영상" data-fr="Vidéos">Watch</p>
     <h2 class="h2" data-en="Press play and create harmony." data-es="Dale play y crea armonía." data-zh="按下播放，创造和谐。" data-ko="재생을 누르고 하모니를 만들어요." data-fr="Appuie sur play et crée l'harmonie.">Press play and create harmony.</h2>
     <p class="lead" data-en="Only parent-approved videos. New stories every week, in many languages. These are Emma's six signature formats." data-es="Solo videos aprobados por los padres. Nuevas historias cada semana, en varios idiomas. Estos son los seis formatos insignia de Emma." data-zh="只发布家长审核过的视频。每周都有新故事，支持多种语言。这是Emma的六个招牌栏目。" data-ko="부모가 승인한 영상만 올려요. 매주 새로운 이야기를 여러 언어로. 엠마의 대표 6가지 포맷이에요." data-fr="Uniquement des vidéos approuvées par les parents. De nouvelles histoires chaque semaine, en plusieurs langues. Voici les six formats phares d'Emma.">Only parent-approved videos. New stories every week, in many languages. These are Emma's six signature formats.</p>
+
+    <!-- Featured: Emma's first real video -->
+    <div class="feature-video">
+      <div class="feature-video__frame">
+        <video controls playsinline preload="metadata" poster="images/logo.jpg">
+          <source src="media/emma-1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="feature-video__meta">
+        <span class="feature-video__badge" data-en="New" data-es="Nuevo" data-fr="Nouveau" data-zh="最新" data-ko="새 영상">New</span>
+        <h3 data-en="Emma's first video 💗" data-es="El primer video de Emma 💗" data-fr="La première vidéo d'Emma 💗" data-zh="Emma的第一个视频 💗" data-ko="엠마의 첫 영상 💗">Emma's first video 💗</h3>
+        <p data-en="Press play and say hi to Emma! New videos every week — in five languages. Follow along and dance with us." data-es="¡Dale play y saluda a Emma! Nuevos videos cada semana — en cinco idiomas. Síguenos y baila con nosotros." data-fr="Appuie sur play et dis bonjour à Emma ! De nouvelles vidéos chaque semaine — en cinq langues. Suis-nous et danse avec nous." data-zh="按下播放，跟Emma打个招呼吧！每周都有新视频——五种语言。关注我们，一起跳舞。" data-ko="재생을 누르고 엠마에게 인사해요! 매주 새 영상 — 다섯 개 언어로. 팔로우하고 함께 춤춰요.">Press play and say hi to Emma! New videos every week — in five languages. Follow along and dance with us.</p>
+        <a class="btn btn--primary btn--sm" href="#follow" data-en="Follow for more" data-es="Sigue para ver más" data-fr="Suis pour en voir plus" data-zh="关注看更多" data-ko="더 보려면 팔로우">Follow for more</a>
+      </div>
+    </div>
 
     <!-- PLACEHOLDER GRID: drop Emma's real reels here. -->
     <div class="reels">
@@ -451,7 +466,7 @@
     <div class="footer__top">
       <div class="footer__brand">
         <span class="brand__mark brand__mark--sm" aria-hidden="true">
-          <img class="brand__logo" src="images/logo.png" alt="" onerror="this.remove()">
+          <img class="brand__logo" src="images/logo.jpg" alt="" onerror="this.remove()">
         </span>
         <span class="brand__text">Emma's <em>Play World</em></span>
         <p class="footer__tag" data-en="Love Creates Harmony" data-es="El Amor Crea Armonía" data-zh="爱创造和谐" data-ko="사랑은 하모니를 만들어요" data-fr="L'Amour Crée l'Harmonie">Love Creates Harmony</p>
