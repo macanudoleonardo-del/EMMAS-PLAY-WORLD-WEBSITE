@@ -43,4 +43,4 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-Sitemap: https://emmasplayworld.com/sitemap.xml
+Sitemap: https://www.emmasplayworld.com/sitemap.xml
