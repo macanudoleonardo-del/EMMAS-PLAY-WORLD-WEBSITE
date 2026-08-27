@@ -1,6 +1,5 @@
 # Emma's Play World — robots.txt
 # Digital Authority Blueprint, Phase 6: let AI crawlers learn about the brand.
-# 🔲 Replace the domain in the Sitemap line with your real domain before launch.
 
 # ── Standard search engines ──
 User-agent: *
