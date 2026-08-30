@@ -343,7 +343,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0 0 .4e
 /* ── real photos (drop into /images) ── */
 .ph-img { position: absolute; object-fit: cover; z-index: 2; }
 .hero__photo { position: relative; }
-.hero__photo .ph-img { inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); border-radius: calc(var(--r-lg) - 6px); object-position: center 28%; }
+.hero__photo .ph-img { inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); border-radius: calc(var(--r-lg) - 6px); object-position: center 42%; }
 .about__ph { position: relative; overflow: hidden; }
 .about__ph .ph-img { inset: 0; width: 100%; height: 100%; border-radius: var(--r-lg); }
 /* circular variant — for the round logo badge (mid size, no black corners) */
