@@ -20,7 +20,7 @@
      Any element missing a translation falls back to English,
      so a half-translated language still renders cleanly.
   ── */
-  var LANGS = ['en', 'es', 'fr', 'zh', 'ko'];
+  var LANGS = ['en', 'es', 'fr', 'zh', 'ko', 'pt'];
 
   function applyLang(lang) {
     if (LANGS.indexOf(lang) === -1) lang = 'en';
@@ -60,6 +60,7 @@
       var nav = (navigator.language || 'en').toLowerCase();
       savedLang = nav.indexOf('es') === 0 ? 'es'
                 : nav.indexOf('fr') === 0 ? 'fr'
+                : nav.indexOf('pt') === 0 ? 'pt'
                 : nav.indexOf('zh') === 0 ? 'zh'
                 : nav.indexOf('ko') === 0 ? 'ko'
                 : 'en';
