@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Emma's Play World sitemap — homepage + one page per language, with USA/LATAM/Europe regional targeting. -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!-- Emma's Play World sitemap — homepage + one page per language + experience, USA/LATAM/Europe regional targeting + video/image. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.emmasplayworld.com/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.emmasplayworld.com/"/>
@@ -38,10 +38,73 @@
     <xhtml:link rel="alternate" hreflang="es-UY" href="https://www.emmasplayworld.com/es/"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.emmasplayworld.com/pt/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.emmasplayworld.com/"/>
+    <video:video>
+      <video:thumbnail_loc>https://www.emmasplayworld.com/images/logo.jpg</video:thumbnail_loc>
+      <video:title>Emma's first video</video:title>
+      <video:description>Meet Emma and her multilingual kids' movement — dance, creativity and kindness. Different rhythms, one heart. #DanceForHarmony</video:description>
+      <video:content_loc>https://www.emmasplayworld.com/media/emma-1.mp4</video:content_loc>
+      <video:duration>32</video:duration>
+      <video:publication_date>2026-07-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://www.emmasplayworld.com/images/logo.jpg</video:thumbnail_loc>
+      <video:title>Dance with Emma</video:title>
+      <video:description>Learn Emma's Harmony Dance and try it with your own culture's music. Kids dance for harmony in five languages. #DanceForHarmony</video:description>
+      <video:content_loc>https://www.emmasplayworld.com/media/emma-2.mp4</video:content_loc>
+      <video:duration>18</video:duration>
+      <video:publication_date>2026-07-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://www.emmasplayworld.com/images/logo.jpg</video:thumbnail_loc>
+      <video:title>Play with Emma</video:title>
+      <video:description>Play, create and smile with Emma — wholesome, family-friendly kids' fun in five languages. Love creates harmony. #DanceForHarmony</video:description>
+      <video:content_loc>https://www.emmasplayworld.com/media/emma-3.mp4</video:content_loc>
+      <video:duration>37</video:duration>
+      <video:publication_date>2026-07-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://www.emmasplayworld.com/images/logo.jpg</video:thumbnail_loc>
+      <video:title>More fun with Emma</video:title>
+      <video:description>More dance, creativity and kindness with Emma, a little global leader bringing kids together across cultures. #DanceForHarmony</video:description>
+      <video:content_loc>https://www.emmasplayworld.com/media/emma-4.mp4</video:content_loc>
+      <video:duration>47</video:duration>
+      <video:publication_date>2026-07-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://www.emmasplayworld.com/images/logo.jpg</video:thumbnail_loc>
+      <video:title>Harmony time with Emma</video:title>
+      <video:description>Harmony time with Emma — bilingual, multicultural kids' content built on love and kindness. Different rhythms, one heart. #DanceForHarmony</video:description>
+      <video:content_loc>https://www.emmasplayworld.com/media/emma-5.mp4</video:content_loc>
+      <video:duration>59</video:duration>
+      <video:publication_date>2026-07-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://www.emmasplayworld.com/images/logo.jpg</video:thumbnail_loc>
+      <video:title>Love from Emma</video:title>
+      <video:description>A little leader with a big heart. Love, dance and kindness for kids and families, in five languages. #DanceForHarmony</video:description>
+      <video:content_loc>https://www.emmasplayworld.com/media/emma-6.mp4</video:content_loc>
+      <video:duration>7</video:duration>
+      <video:publication_date>2026-07-24T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <image:image>
+      <image:loc>https://www.emmasplayworld.com/images/emma-ballet.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.emmasplayworld.com/images/emma-hero.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.emmasplayworld.com/images/logo.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://www.emmasplayworld.com/es/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.emmasplayworld.com/"/>
@@ -79,7 +142,7 @@
   </url>
   <url>
     <loc>https://www.emmasplayworld.com/fr/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.emmasplayworld.com/"/>
@@ -117,7 +180,7 @@
   </url>
   <url>
     <loc>https://www.emmasplayworld.com/zh/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.emmasplayworld.com/"/>
@@ -155,7 +218,7 @@
   </url>
   <url>
     <loc>https://www.emmasplayworld.com/ko/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.emmasplayworld.com/"/>
@@ -193,7 +256,7 @@
   </url>
   <url>
     <loc>https://www.emmasplayworld.com/pt/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.emmasplayworld.com/"/>
@@ -228,5 +291,11 @@
     <xhtml:link rel="alternate" hreflang="es-UY" href="https://www.emmasplayworld.com/es/"/>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://www.emmasplayworld.com/pt/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.emmasplayworld.com/"/>
+  </url>
+  <url>
+    <loc>https://www.emmasplayworld.com/experience.html</loc>
+    <lastmod>2026-10-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

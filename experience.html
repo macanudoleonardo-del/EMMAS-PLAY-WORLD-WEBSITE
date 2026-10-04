@@ -4,132 +4,133 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Emma's Play World — Love Creates Harmony</title>
-<meta name="description" content="A cinematic journey into Emma's Play World — a children's movement of dance, kindness and multicultural harmony. Love Creates Harmony. #DanceForHarmony">
+<meta name="description" content="A cinematic journey into Emma's Play World — a bright, joyful children's movement of dance, kindness and multicultural harmony. Love Creates Harmony. #DanceForHarmony">
 <link rel="canonical" href="https://www.emmasplayworld.com/experience.html">
-<meta name="theme-color" content="#1b0a23">
+<meta name="theme-color" content="#FF2EA6">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Emma's Play World — Love Creates Harmony">
-<meta property="og:description" content="A cinematic journey into a children's movement of dance, kindness and multicultural harmony. #DanceForHarmony">
+<meta property="og:description" content="A bright, joyful journey into a children's movement of dance, kindness and multicultural harmony. #DanceForHarmony">
 <meta property="og:image" content="https://www.emmasplayworld.com/images/exp-harmony.png">
 <meta property="og:url" content="https://www.emmasplayworld.com/experience.html">
 <link rel="icon" type="image/jpg" href="images/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pink:#FF3EA5; --purple:#A24CE0; --gold:#FFC93C; --sky:#46C6EE;
-    --plum:#1b0a23; --plum2:#2a1033; --cream:#FFF3FA;
-    --ink:#fff; --muted:rgba(255,255,255,.72);
+    --pink:#FF2EA6; --purple:#9D3BE8; --gold:#FFB300; --sky:#2FC4F5; --green:#3FD17F; --coral:#FF7A59;
+    --ink:#3A1250; --cream:#FFF6FB; --white:#fff;
     --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
     --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
-  body{background:var(--plum);color:var(--ink);font-family:var(--body);
+  body{background:var(--cream);color:var(--ink);font-family:var(--body);
     overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased}
   img,video{display:block;max-width:100%}
   a{color:inherit}
   .wrap{width:min(1100px,92vw);margin-inline:auto}
   h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.01em}
+  /* vivid outlined display text — reads on any background, kid-sticker pop */
+  .pop{background:linear-gradient(100deg,#FF2EA6,#9D3BE8 38%,#2FC4F5 66%,#FFB300);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    -webkit-text-stroke:2.5px #fff;paint-order:stroke fill;
+    filter:drop-shadow(0 8px 20px rgba(157,59,232,.35))}
 
-  /* floating sparkle canvas */
-  #sparks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;opacity:.6}
+  #sparks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
 
   /* ---------- HERO ---------- */
   .hero{position:relative;height:100svh;min-height:600px;overflow:hidden}
-  .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    transform:scale(1.08);filter:saturate(1.05)}
+  .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);filter:saturate(1.25) brightness(1.05)}
   .hero__scrim{position:absolute;inset:0;background:
-    radial-gradient(120% 90% at 50% 20%,transparent 30%,rgba(27,10,35,.55) 75%,rgba(27,10,35,.95) 100%),
-    linear-gradient(180deg,rgba(27,10,35,.35),rgba(27,10,35,.15) 40%,rgba(27,10,35,.9))}
+    radial-gradient(120% 80% at 50% 42%,transparent 40%,rgba(255,46,166,.08) 80%),
+    linear-gradient(180deg,rgba(255,255,255,.15),transparent 28%,transparent 62%,var(--cream))}
   .hero__inner{position:relative;z-index:3;height:100%;display:grid;place-items:center;text-align:center;padding:24px}
-  .kicker{font-family:var(--display);font-weight:700;letter-spacing:.42em;
-    font-size:clamp(.62rem,1.6vw,.82rem);color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem}
-  .hero h1{font-size:clamp(2.8rem,10vw,8.5rem);
-    background:linear-gradient(120deg,#fff 10%,#ffd9ef 40%,#c9a8ff 75%,#bfe9ff);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    text-shadow:0 12px 60px rgba(255,62,165,.25);filter:drop-shadow(0 6px 30px rgba(162,76,224,.3))}
-  .hero__sub{max-width:40ch;margin:1.6rem auto 0;color:var(--muted);
-    font-size:clamp(1rem,2.4vw,1.3rem);font-weight:400}
+  .kicker{font-family:var(--display);font-weight:800;letter-spacing:.38em;
+    font-size:clamp(.66rem,1.7vw,.9rem);color:var(--purple);text-transform:uppercase;margin-bottom:1.1rem;
+    text-shadow:0 2px 12px #fff,0 0 2px #fff}
+  .hero h1{font-size:clamp(3rem,10.5vw,9rem)}
+  .hero__sub{max-width:38ch;margin:1.7rem auto 0;color:var(--ink);font-weight:600;
+    font-size:clamp(1.05rem,2.5vw,1.4rem);text-shadow:0 2px 16px #fff,0 1px 2px #fff}
   .scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
-    color:var(--muted);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;text-align:center}
-  .scrollcue span{display:block;width:1px;height:46px;margin:10px auto 0;
-    background:linear-gradient(var(--gold),transparent);animation:cue 1.8s ease-in-out infinite}
-  @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.4;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
+    color:var(--purple);font-weight:700;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;text-shadow:0 1px 10px #fff}
+  .scrollcue span{display:block;width:3px;height:44px;margin:10px auto 0;border-radius:3px;
+    background:linear-gradient(var(--pink),var(--sky));animation:cue 1.6s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.5;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
 
   /* ---------- STATEMENT ---------- */
-  .statement{position:relative;padding:clamp(120px,22vh,260px) 0;text-align:center;overflow:hidden}
-  .statement__bg{position:absolute;inset:-10% 0;width:100%;height:120%;object-fit:cover;opacity:.28;filter:blur(2px)}
-  .statement::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--plum),rgba(27,10,35,.4),var(--plum))}
-  .statement .wrap{position:relative;z-index:2}
-  .statement h2{font-size:clamp(2rem,7vw,5.4rem);color:#fff}
+  .statement{position:relative;padding:clamp(120px,22vh,250px) 0;text-align:center;background:
+    radial-gradient(90% 60% at 50% 30%,rgba(47,196,245,.14),transparent 60%),var(--cream)}
+  .statement h2{font-size:clamp(2rem,7vw,5.2rem);color:var(--ink)}
   .statement .w{display:inline-block;opacity:.12}
   .heart{color:var(--pink);-webkit-text-fill-color:var(--pink)}
 
-  /* ---------- SECTION base ---------- */
   .section{position:relative;padding:clamp(90px,14vh,170px) 0}
-  .eyebrow{font-family:var(--display);font-weight:700;letter-spacing:.3em;text-transform:uppercase;
-    font-size:.72rem;color:var(--gold);margin-bottom:1rem}
-  .h2{font-size:clamp(2rem,6vw,4rem);margin-bottom:1rem}
-  .lead{color:var(--muted);font-size:clamp(1rem,2.2vw,1.25rem);max-width:46ch}
+  .eyebrow{font-family:var(--display);font-weight:800;letter-spacing:.26em;text-transform:uppercase;
+    font-size:.74rem;color:var(--pink);margin-bottom:1rem}
+  .h2{font-size:clamp(2rem,6vw,4rem);margin-bottom:1rem;color:var(--ink)}
+  .lead{color:#6a4b7a;font-size:clamp(1rem,2.2vw,1.25rem);max-width:46ch;font-weight:500}
 
-  /* Four Worlds */
-  .worlds{position:relative;overflow:hidden}
-  .worlds__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22}
-  .worlds::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--plum),rgba(27,10,35,.55),var(--plum));z-index:1}
-  .worlds .wrap{position:relative;z-index:2}
+  /* Four Worlds — vivid colour-block cards */
+  .worlds{background:
+    radial-gradient(70% 50% at 15% 10%,rgba(255,46,166,.1),transparent 55%),
+    radial-gradient(70% 50% at 90% 90%,rgba(47,196,245,.12),transparent 55%),var(--cream)}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:3rem}
   @media(max-width:720px){.grid{grid-template-columns:1fr}}
-  .card{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
-    border:1px solid rgba(255,255,255,.12);border-radius:26px;padding:34px 30px;
-    backdrop-filter:blur(8px);will-change:transform,opacity}
-  .card .em{font-size:2.4rem;display:block;margin-bottom:.6rem}
-  .card h3{font-size:1.6rem;margin-bottom:.5rem;color:#fff}
-  .card p{color:var(--muted);font-size:1rem}
-  .card--dance{box-shadow:0 20px 60px rgba(255,62,165,.18)}
-  .card--create{box-shadow:0 20px 60px rgba(70,198,238,.16)}
-  .card--culture{box-shadow:0 20px 60px rgba(162,76,224,.18)}
-  .card--kind{box-shadow:0 20px 60px rgba(255,201,60,.16)}
+  .card{border-radius:30px;padding:38px 32px;color:#fff;will-change:transform,opacity;
+    box-shadow:0 22px 50px rgba(58,18,80,.18);transition:transform .3s ease}
+  .card:hover{transform:translateY(-6px) rotate(-1deg)}
+  .card .em{font-size:2.8rem;display:block;margin-bottom:.5rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
+  .card h3{font-size:1.7rem;margin-bottom:.5rem;color:#fff}
+  .card p{color:rgba(255,255,255,.95);font-size:1.02rem;font-weight:500}
+  .card--dance{background:linear-gradient(145deg,#FF2EA6,#FF6FB5)}
+  .card--create{background:linear-gradient(145deg,#2FC4F5,#4ad7c0)}
+  .card--culture{background:linear-gradient(145deg,#9D3BE8,#c061e6)}
+  .card--kind{background:linear-gradient(145deg,#FFB300,#FF7A59);color:#4a2600}
+  .card--kind h3,.card--kind p{color:#4a2600}
 
   /* Full-bleed video feature */
   .feature{position:relative;height:100svh;min-height:560px;overflow:hidden;display:grid;place-items:center;text-align:center}
-  .feature__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1)}
-  .feature__scrim{position:absolute;inset:0;background:radial-gradient(100% 100% at 50% 50%,rgba(27,10,35,.25),rgba(27,10,35,.85))}
+  .feature__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1);filter:saturate(1.25) brightness(1.05)}
+  .feature__scrim{position:absolute;inset:0;background:radial-gradient(100% 80% at 50% 50%,rgba(255,255,255,.12),rgba(255,105,180,.12) 70%,rgba(157,59,232,.18))}
   .feature .wrap{position:relative;z-index:2}
-  .feature h2{font-size:clamp(2.4rem,8vw,6rem);color:#fff}
-  .tag{display:inline-block;margin-top:1.2rem;font-family:var(--display);font-weight:800;
-    font-size:clamp(1.1rem,3vw,1.8rem);
-    background:linear-gradient(90deg,var(--pink),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .feature h2{font-size:clamp(2.4rem,8vw,6rem)}
+  .tag{display:inline-block;margin-top:1.2rem;font-family:var(--display);font-weight:800;color:#fff;
+    font-size:clamp(1.1rem,3.4vw,2rem);padding:.3em .9em;border-radius:999px;
+    background:linear-gradient(90deg,var(--pink),var(--purple));box-shadow:0 12px 30px rgba(255,46,166,.4)}
 
   /* Meet Emma */
+  .emma-sec{background:
+    radial-gradient(60% 50% at 85% 20%,rgba(63,209,127,.12),transparent 55%),var(--cream)}
   .emma{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,72px);align-items:center}
   @media(max-width:820px){.emma{grid-template-columns:1fr}}
   .emma__photo{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:4/5;
-    box-shadow:0 30px 80px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.12)}
+    box-shadow:0 26px 60px rgba(58,18,80,.25);border:5px solid #fff}
   .emma__photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;transform:scale(1.12);will-change:transform}
-  .emma__photo .frame{position:absolute;inset:0;border-radius:30px;
-    background:linear-gradient(140deg,rgba(255,62,165,.25),transparent 40%,rgba(70,198,238,.2));mix-blend-mode:screen;pointer-events:none}
+  .emma__photo .frame{position:absolute;inset:0;border-radius:26px;
+    background:linear-gradient(140deg,rgba(255,46,166,.22),transparent 45%,rgba(47,196,245,.22));mix-blend-mode:screen;pointer-events:none}
 
   /* Harmony orb */
-  .harmony{position:relative;text-align:center;overflow:hidden}
-  .orb{width:min(560px,80vw);margin:0 auto 2.5rem;border-radius:50%;
-    filter:drop-shadow(0 0 60px rgba(162,76,224,.5));will-change:transform}
-  .harmony h2{font-size:clamp(1.8rem,5.5vw,3.6rem);max-width:18ch;margin-inline:auto}
+  .harmony{text-align:center;overflow:hidden;background:
+    radial-gradient(80% 60% at 50% 20%,rgba(47,196,245,.18),transparent 60%),
+    linear-gradient(180deg,#eafaff,var(--cream))}
+  .orb{width:min(540px,80vw);margin:0 auto 2.4rem;border-radius:50%;
+    filter:drop-shadow(0 0 50px rgba(157,59,232,.4));will-change:transform}
+  .harmony h2{font-size:clamp(1.9rem,5.6vw,3.8rem);max-width:17ch;margin-inline:auto;color:var(--ink)}
 
   /* CTA + footer */
-  .cta{text-align:center;padding:clamp(100px,18vh,200px) 0}
-  .cta h2{font-size:clamp(2.4rem,8vw,5.5rem);margin-bottom:2rem;
-    background:linear-gradient(120deg,#fff,#ffd9ef,#bfe9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .cta{text-align:center;padding:clamp(110px,18vh,210px) 0;color:#fff;background:
+    linear-gradient(135deg,#FF2EA6,#9D3BE8 55%,#2FC4F5)}
+  .cta h2{font-size:clamp(2.4rem,8vw,5.5rem);margin-bottom:2rem;color:#fff;text-shadow:0 8px 24px rgba(58,18,80,.3)}
   .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-  .btn{display:inline-block;padding:16px 34px;border-radius:999px;font-weight:700;font-family:var(--display);
+  .btn{display:inline-block;padding:17px 36px;border-radius:999px;font-weight:800;font-family:var(--display);
     text-decoration:none;transition:transform .25s ease,box-shadow .25s ease}
-  .btn--main{background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff;box-shadow:0 14px 40px rgba(255,62,165,.4)}
-  .btn--ghost{border:1px solid rgba(255,255,255,.3);color:#fff}
-  .btn:hover{transform:translateY(-3px)}
-  footer{border-top:1px solid rgba(255,255,255,.1);padding:46px 0;text-align:center;color:var(--muted);font-size:.9rem}
-  footer img{width:70px;height:70px;border-radius:50%;margin:0 auto 14px;object-fit:cover}
-  footer a{color:var(--gold);text-decoration:none;margin:0 10px}
+  .btn--main{background:var(--gold);color:#4a2600;box-shadow:0 14px 34px rgba(0,0,0,.2)}
+  .btn--ghost{background:rgba(255,255,255,.18);border:2px solid #fff;color:#fff}
+  .btn:hover{transform:translateY(-4px) scale(1.03)}
+  footer{background:var(--ink);padding:46px 0;text-align:center;color:rgba(255,255,255,.75);font-size:.9rem}
+  footer img{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;object-fit:cover;border:3px solid var(--gold)}
+  footer a{color:var(--gold);text-decoration:none;margin:0 10px;font-weight:600}
   .reveal{opacity:0;transform:translateY(40px);will-change:transform,opacity}
 
   @media (prefers-reduced-motion: reduce){
@@ -150,8 +151,8 @@
   <div class="hero__inner">
     <div>
       <p class="kicker">Emma's Play World</p>
-      <h1>Love&nbsp;Creates<br>Harmony</h1>
-      <p class="hero__sub">A children's movement of dance, kindness and multicultural harmony — led by a little global leader with a big heart.</p>
+      <h1 class="pop">Love&nbsp;Creates<br>Harmony</h1>
+      <p class="hero__sub">A bright children's movement of dance, kindness and multicultural harmony — led by a little global leader with a big heart.</p>
     </div>
   </div>
   <div class="scrollcue">scroll<span></span></div>
@@ -159,7 +160,6 @@
 
 <!-- STATEMENT -->
 <section class="statement" id="statement">
-  <img class="statement__bg" src="images/exp-texture.png" alt="" aria-hidden="true">
   <div class="wrap">
     <h2 id="stmt">A little leader with a big <span class="heart">heart.</span></h2>
   </div>
@@ -167,17 +167,14 @@
 
 <!-- FOUR WORLDS -->
 <section class="section worlds" id="worlds">
-  <video class="worlds__bg" autoplay muted loop playsinline preload="metadata" poster="images/exp-texture.png">
-    <source src="media/exp-dance.mp4" type="video/mp4">
-  </video>
   <div class="wrap">
     <p class="eyebrow reveal">Explore</p>
     <h2 class="h2 reveal">The Four Worlds</h2>
-    <p class="lead reveal">Four ways Emma helps children of every culture feel they belong.</p>
+    <p class="lead reveal">Four bright ways Emma helps children of every culture feel they belong.</p>
     <div class="grid">
       <div class="card card--dance reveal"><span class="em">🩰</span><h3>Dance</h3><p>Joy you can move to — routines and ballet kids can do at home.</p></div>
       <div class="card card--create reveal"><span class="em">🎨</span><h3>Create</h3><p>Every child has something beautiful inside, waiting to be made.</p></div>
-      <div class="card card--culture reveal"><span class="em">🌍</span><h3>Culture</h3><p>Different roots can live in one harmony — many languages, one heart.</p></div>
+      <div class="card card--culture reveal"><span class="em">🌍</span><h3>Culture</h3><p>Different roots, one harmony — many languages, one big heart.</p></div>
       <div class="card card--kind reveal"><span class="em">💗</span><h3>Kindness</h3><p>Love is the language every child already speaks.</p></div>
     </div>
   </div>
@@ -190,15 +187,14 @@
   </video>
   <div class="feature__scrim"></div>
   <div class="wrap">
-    <h2 class="reveal">Different rhythms.<br>One heart.</h2>
+    <h2 class="pop reveal">Different rhythms.<br>One heart.</h2>
     <span class="tag reveal">#DanceForHarmony</span>
   </div>
 </section>
 
 <!-- MEET EMMA (real photo) -->
-<section class="section" id="emma" style="position:relative;overflow:hidden">
-  <img src="images/exp-studio.png" alt="" aria-hidden="true" style="position:absolute;inset:-5% 0;width:100%;height:110%;object-fit:cover;opacity:.15">
-  <div class="wrap emma" style="position:relative;z-index:2">
+<section class="section emma-sec" id="emma">
+  <div class="wrap emma">
     <div class="emma__photo"><img src="images/emma-ballet.jpg" alt="Emma in a pink ballet leotard"><div class="frame"></div></div>
     <div>
       <p class="eyebrow reveal">Meet Emma</p>
@@ -219,7 +215,7 @@
 <!-- CTA -->
 <section class="cta" id="cta">
   <div class="wrap">
-    <h2>Come play with us.</h2>
+    <h2>Come play with us!</h2>
     <div class="btns">
       <a class="btn btn--main" href="/">Enter Emma's World</a>
       <a class="btn btn--ghost" href="https://www.instagram.com/emmas.playworld" target="_blank" rel="noopener">Follow on Instagram</a>
@@ -246,13 +242,10 @@
   "use strict";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Split the statement into words for a scrubbed reveal
   try{
     var stmt = document.getElementById("stmt");
     if(stmt){
-      var html = stmt.innerHTML;
-      // wrap plain words, keep the <span class="heart"> intact
-      stmt.innerHTML = html.replace(/(<span class="heart">.*?<\/span>)|(\S+)/g, function(m,keep,word){
+      stmt.innerHTML = stmt.innerHTML.replace(/(<span class="heart">.*?<\/span>)|(\S+)/g, function(m,keep,word){
         if(keep) return '<span class="w" style="display:inline-block">'+keep+'</span> ';
         return '<span class="w">'+word+'</span> ';
       });
@@ -260,14 +253,12 @@
   }catch(e){}
 
   if(reduce || !window.gsap){
-    // graceful static fallback
     document.querySelectorAll('.reveal,.w').forEach(function(el){el.style.opacity=1;el.style.transform='none';});
     return;
   }
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Lenis smooth scroll wired to GSAP ticker
   try{
     if(window.Lenis){
       var lenis = new Lenis({lerp:.1,smoothWheel:true});
@@ -277,29 +268,21 @@
     }
   }catch(e){}
 
-  // HERO: pin + scrub — video scales, content lifts & fades
   gsap.timeline({scrollTrigger:{trigger:"#hero",start:"top top",end:"+=100%",scrub:true,pin:true}})
     .to("#heroVid",{scale:1.25,ease:"none"},0)
-    .to(".hero__inner",{yPercent:-28,opacity:0,ease:"none"},0)
+    .to(".hero__inner",{yPercent:-26,opacity:0,ease:"none"},0)
     .to(".scrollcue",{opacity:0,ease:"none"},0);
 
-  // STATEMENT: words fade up on scrub
   gsap.to(".statement .w",{opacity:1,stagger:.08,ease:"none",
     scrollTrigger:{trigger:"#statement",start:"top 70%",end:"bottom 60%",scrub:true}});
 
-  // Generic reveals
   gsap.utils.toArray(".reveal").forEach(function(el){
-    gsap.to(el,{opacity:1,y:0,duration:.9,ease:"power3.out",
-      scrollTrigger:{trigger:el,start:"top 85%"}});
+    gsap.to(el,{opacity:1,y:0,duration:.9,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 85%"}});
   });
 
-  // Cards stagger
   gsap.to(".worlds .card",{opacity:1,y:0,stagger:.12,duration:.8,ease:"power3.out",
     scrollTrigger:{trigger:".grid",start:"top 80%"}});
 
-  // Parallax: section video backgrounds + Emma photo + orb
-  gsap.to(".worlds__bg",{yPercent:18,ease:"none",scrollTrigger:{trigger:".worlds",start:"top bottom",end:"bottom top",scrub:true}});
-  gsap.to(".statement__bg",{yPercent:20,ease:"none",scrollTrigger:{trigger:".statement",start:"top bottom",end:"bottom top",scrub:true}});
   gsap.fromTo(".emma__photo img",{yPercent:-8},{yPercent:8,ease:"none",scrollTrigger:{trigger:"#emma",start:"top bottom",end:"bottom top",scrub:true}});
   gsap.fromTo(".orb",{scale:.9,rotate:-6},{scale:1.05,rotate:6,ease:"none",scrollTrigger:{trigger:"#orb",start:"top bottom",end:"bottom top",scrub:true}});
   gsap.to(".feature__bg",{scale:1.25,ease:"none",scrollTrigger:{trigger:"#harmony-feature",start:"top bottom",end:"bottom top",scrub:true}});
@@ -307,15 +290,15 @@
   ScrollTrigger.refresh();
 })();
 
-/* Lightweight floating sparkles (vanilla canvas) */
+/* Bright floating sparkles */
 (function(){
   var c=document.getElementById("sparks"); if(!c) return;
   var ctx=c.getContext("2d"), w,h,parts=[],raf;
-  var colors=["#FF3EA5","#FFC93C","#46C6EE","#A24CE0","#ffffff"];
+  var colors=["#FF2EA6","#FFB300","#2FC4F5","#9D3BE8","#3FD17F"];
   function size(){ w=c.width=innerWidth; h=c.height=innerHeight; }
-  function make(){ return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.4,
-    s:Math.random()*.4+.1,o:Math.random()*.6+.2,col:colors[(Math.random()*colors.length)|0]}; }
-  function init(){ size(); parts=[]; var n=Math.min(90,Math.round(w/16)); for(var i=0;i<n;i++)parts.push(make()); }
+  function make(){ return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.4+.5,
+    s:Math.random()*.4+.1,o:Math.random()*.5+.3,col:colors[(Math.random()*colors.length)|0]}; }
+  function init(){ size(); parts=[]; var n=Math.min(95,Math.round(w/15)); for(var i=0;i<n;i++)parts.push(make()); }
   function tick(){ ctx.clearRect(0,0,w,h);
     for(var i=0;i<parts.length;i++){var p=parts[i]; p.y-=p.s; if(p.y<-5){p.y=h+5;p.x=Math.random()*w;}
       ctx.globalAlpha=p.o; ctx.fillStyle=p.col; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.28); ctx.fill();}
