@@ -48,6 +48,20 @@
     langSel.addEventListener('change', function () { applyLang(langSel.value); });
   }
 
+  // mobile hamburger menu
+  var burger = document.getElementById('navBurger');
+  var navEl = document.getElementById('nav');
+  var navLinks = document.getElementById('navLinks');
+  if (burger && navEl) {
+    burger.addEventListener('click', function () {
+      var open = navEl.classList.toggle('nav--open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    if (navLinks) navLinks.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { navEl.classList.remove('nav--open'); burger.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+
   // saved choice wins; else this page's own language (pre-rendered /es/ /fr/ …);
   // else follow the browser.
   var savedLang = store.get('epw-lang');

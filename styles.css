@@ -161,7 +161,19 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0 0 .4e
 .brand__mark--sm .brand__logo, .footer__brand .brand__logo { width: 28px; height: 28px; }
 .iconbtn { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: border-color var(--t), color var(--t); }
 .iconbtn:hover { border-color: var(--accent); color: var(--accent); }
-@media (max-width: 1040px) { .nav__links { display: none; } }
+.nav__burger { display: none; }
+.nav__burger-close { display: none; }
+.nav--open .nav__burger-open { display: none; }
+.nav--open .nav__burger-close { display: block; }
+@media (max-width: 1040px) {
+  .nav__burger { display: grid; }
+  .nav__links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; margin: 0;
+    padding: 6px 5vw 14px; background: color-mix(in srgb, var(--bg) 97%, transparent); backdrop-filter: blur(16px) saturate(1.4);
+    border-bottom: 1px solid var(--line); box-shadow: 0 24px 44px rgba(122,30,90,.16); }
+  .nav--open .nav__links { display: flex; }
+  .nav__links a { padding: 14px 6px; font-size: 1.08rem; border-bottom: 1px solid var(--line); }
+  .nav__links a:last-child { border-bottom: none; }
+}
 @media (max-width: 560px) { .nav__tools .btn { display: none; } }
 
 /* ── hero ── */
