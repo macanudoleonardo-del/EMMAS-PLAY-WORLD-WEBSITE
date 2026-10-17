@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Emma's Play World — Love Creates Harmony</title>
-<meta name="description" content="A cinematic journey into Emma's Play World — a bright, joyful children's movement of dance, kindness and multicultural harmony. Love Creates Harmony. #DanceForHarmony">
+<meta name="description" content="Explore Emma's Play World: free family-friendly videos for ages 4–12, celebrating dance, creativity, culture and kindness. Love Creates Harmony.">
 <link rel="canonical" href="https://www.emmasplayworld.com/experience.html">
 <meta name="robots" content="index, follow">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -12,162 +12,70 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Emma's Play World — Love Creates Harmony">
 <meta property="og:description" content="A bright, joyful journey into a children's movement of dance, kindness and multicultural harmony. #DanceForHarmony">
-<meta property="og:image" content="https://www.emmasplayworld.com/images/exp-harmony.png">
-<meta property="og:image:type" content="image/png">
-<meta property="og:image:width" content="1344">
-<meta property="og:image:height" content="752">
-<meta property="og:image:alt" content="Emma's Play World — a glowing globe of pastel light symbolizing harmony">
+<meta property="og:image" content="https://www.emmasplayworld.com/images/emma-ballet.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1500">
+<meta property="og:image:height" content="2000">
+<meta property="og:image:alt" content="Emma in her pink ballet outfit — Emma's Play World">
 <meta property="og:site_name" content="Emma's Play World">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://www.emmasplayworld.com/experience.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Emma's Play World — Love Creates Harmony">
 <meta name="twitter:description" content="A bright, joyful cinematic journey into a children's movement of dance, kindness and multicultural harmony. #DanceForHarmony">
-<meta name="twitter:image" content="https://www.emmasplayworld.com/images/exp-harmony.png">
+<meta name="twitter:image" content="https://www.emmasplayworld.com/images/emma-ballet.jpg">
+<meta name="twitter:image:alt" content="Emma in her pink ballet outfit — Emma's Play World">
+<link rel="preload" as="image" href="images/emma-ballet.jpg">
 <link rel="icon" type="image/jpg" href="images/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --pink:#FF2EA6; --purple:#9D3BE8; --gold:#FFB300; --sky:#2FC4F5; --green:#3FD17F; --coral:#FF7A59;
-    --ink:#3A1250; --cream:#FFF6FB; --white:#fff;
-    --display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;
-    --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
-  body{background:var(--cream);color:var(--ink);font-family:var(--body);
-    overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased}
-  img,video{display:block;max-width:100%}
-  a{color:inherit}
-  .wrap{width:min(1100px,92vw);margin-inline:auto}
-  h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.01em}
-  /* vivid outlined display text — reads on any background, kid-sticker pop */
-  .pop{background:linear-gradient(100deg,#FF2EA6,#9D3BE8 38%,#2FC4F5 66%,#FFB300);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    -webkit-text-stroke:2.5px #fff;paint-order:stroke fill;
-    filter:drop-shadow(0 8px 20px rgba(157,59,232,.35))}
-
-  #sparks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
-
-  /* ---------- HERO ---------- */
-  .hero{position:relative;height:100svh;min-height:600px;overflow:hidden}
-  .hero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);filter:saturate(1.25) brightness(1.05)}
-  .hero__scrim{position:absolute;inset:0;background:
-    radial-gradient(120% 80% at 50% 42%,transparent 40%,rgba(255,46,166,.08) 80%),
-    linear-gradient(180deg,rgba(255,255,255,.15),transparent 28%,transparent 62%,var(--cream))}
-  .hero__inner{position:relative;z-index:3;height:100%;display:grid;place-items:center;text-align:center;padding:24px}
-  .kicker{font-family:var(--display);font-weight:800;letter-spacing:.38em;
-    font-size:clamp(.66rem,1.7vw,.9rem);color:var(--purple);text-transform:uppercase;margin-bottom:1.1rem;
-    text-shadow:0 2px 12px #fff,0 0 2px #fff}
-  .hero h1{font-size:clamp(3rem,10.5vw,9rem)}
-  .hero__sub{max-width:38ch;margin:1.7rem auto 0;color:var(--ink);font-weight:600;
-    font-size:clamp(1.05rem,2.5vw,1.4rem);text-shadow:0 2px 16px #fff,0 1px 2px #fff}
-  .scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
-    color:var(--purple);font-weight:700;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;text-shadow:0 1px 10px #fff}
-  .scrollcue span{display:block;width:3px;height:44px;margin:10px auto 0;border-radius:3px;
-    background:linear-gradient(var(--pink),var(--sky));animation:cue 1.6s ease-in-out infinite}
-  @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.5;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
-
-  /* ---------- STATEMENT ---------- */
-  .statement{position:relative;padding:clamp(120px,22vh,250px) 0;text-align:center;background:
-    radial-gradient(90% 60% at 50% 30%,rgba(47,196,245,.14),transparent 60%),var(--cream)}
-  .statement h2{font-size:clamp(2rem,7vw,5.2rem);color:var(--ink)}
-  .statement .w{display:inline-block;opacity:.12}
-  .heart{color:var(--pink);-webkit-text-fill-color:var(--pink)}
-
-  .section{position:relative;padding:clamp(90px,14vh,170px) 0}
-  .eyebrow{font-family:var(--display);font-weight:800;letter-spacing:.26em;text-transform:uppercase;
-    font-size:.74rem;color:var(--pink);margin-bottom:1rem}
-  .h2{font-size:clamp(2rem,6vw,4rem);margin-bottom:1rem;color:var(--ink)}
-  .lead{color:#6a4b7a;font-size:clamp(1rem,2.2vw,1.25rem);max-width:46ch;font-weight:500}
-
-  /* Four Worlds — vivid colour-block cards */
-  .worlds{background:
-    radial-gradient(70% 50% at 15% 10%,rgba(255,46,166,.1),transparent 55%),
-    radial-gradient(70% 50% at 90% 90%,rgba(47,196,245,.12),transparent 55%),var(--cream)}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:3rem}
-  @media(max-width:720px){.grid{grid-template-columns:1fr}}
-  .card{border-radius:30px;padding:38px 32px;color:#fff;will-change:transform,opacity;
-    box-shadow:0 22px 50px rgba(58,18,80,.18);transition:transform .3s ease}
-  .card:hover{transform:translateY(-6px) rotate(-1deg)}
-  .card .em{font-size:2.8rem;display:block;margin-bottom:.5rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
-  .card h3{font-size:1.7rem;margin-bottom:.5rem;color:#fff}
-  .card p{color:rgba(255,255,255,.95);font-size:1.02rem;font-weight:500}
-  .card--dance{background:linear-gradient(145deg,#FF2EA6,#FF6FB5)}
-  .card--create{background:linear-gradient(145deg,#2FC4F5,#4ad7c0)}
-  .card--culture{background:linear-gradient(145deg,#9D3BE8,#c061e6)}
-  .card--kind{background:linear-gradient(145deg,#FFB300,#FF7A59);color:#4a2600}
-  .card--kind h3,.card--kind p{color:#4a2600}
-
-  /* Full-bleed video feature */
-  .feature{position:relative;height:100svh;min-height:560px;overflow:hidden;display:grid;place-items:center;text-align:center}
-  .feature__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.1);filter:saturate(1.25) brightness(1.05)}
-  .feature__scrim{position:absolute;inset:0;background:radial-gradient(100% 80% at 50% 50%,rgba(255,255,255,.12),rgba(255,105,180,.12) 70%,rgba(157,59,232,.18))}
-  .feature .wrap{position:relative;z-index:2}
-  .feature h2{font-size:clamp(2.4rem,8vw,6rem)}
-  .tag{display:inline-block;margin-top:1.2rem;font-family:var(--display);font-weight:800;color:#fff;
-    font-size:clamp(1.1rem,3.4vw,2rem);padding:.3em .9em;border-radius:999px;
-    background:linear-gradient(90deg,var(--pink),var(--purple));box-shadow:0 12px 30px rgba(255,46,166,.4)}
-
-  /* Meet Emma */
-  .emma-sec{background:
-    radial-gradient(60% 50% at 85% 20%,rgba(63,209,127,.12),transparent 55%),var(--cream)}
-  .emma{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,72px);align-items:center}
-  @media(max-width:820px){.emma{grid-template-columns:1fr}}
-  .emma__photo{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:4/5;
-    box-shadow:0 26px 60px rgba(58,18,80,.25);border:5px solid #fff}
-  .emma__photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;transform:scale(1.12);will-change:transform}
-  .emma__photo .frame{position:absolute;inset:0;border-radius:26px;
-    background:linear-gradient(140deg,rgba(255,46,166,.22),transparent 45%,rgba(47,196,245,.22));mix-blend-mode:screen;pointer-events:none}
-
-  /* Harmony orb */
-  .harmony{text-align:center;overflow:hidden;background:
-    radial-gradient(80% 60% at 50% 20%,rgba(47,196,245,.18),transparent 60%),
-    linear-gradient(180deg,#eafaff,var(--cream))}
-  .orb{width:min(540px,80vw);margin:0 auto 2.4rem;border-radius:50%;
-    filter:drop-shadow(0 0 50px rgba(157,59,232,.4));will-change:transform}
-  .harmony h2{font-size:clamp(1.9rem,5.6vw,3.8rem);max-width:17ch;margin-inline:auto;color:var(--ink)}
-
-  /* CTA + footer */
-  .cta{text-align:center;padding:clamp(110px,18vh,210px) 0;color:#fff;background:
-    linear-gradient(135deg,#FF2EA6,#9D3BE8 55%,#2FC4F5)}
-  .cta h2{font-size:clamp(2.4rem,8vw,5.5rem);margin-bottom:2rem;color:#fff;text-shadow:0 8px 24px rgba(58,18,80,.3)}
-  .btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-  .btn{display:inline-block;padding:17px 36px;border-radius:999px;font-weight:800;font-family:var(--display);
-    text-decoration:none;transition:transform .25s ease,box-shadow .25s ease}
-  .btn--main{background:var(--gold);color:#4a2600;box-shadow:0 14px 34px rgba(0,0,0,.2)}
-  .btn--ghost{background:rgba(255,255,255,.18);border:2px solid #fff;color:#fff}
-  .btn:hover{transform:translateY(-4px) scale(1.03)}
-  footer{background:var(--ink);padding:46px 0;text-align:center;color:rgba(255,255,255,.75);font-size:.9rem}
-  footer img{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;object-fit:cover;border:3px solid var(--gold)}
-  footer a{color:var(--gold);text-decoration:none;margin:0 10px;font-weight:600}
-  .reveal{opacity:0;transform:translateY(40px);will-change:transform,opacity}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none!important}
-    .reveal,.statement .w{opacity:1!important;transform:none!important}
-  }
-</style>
+<link rel="stylesheet" href="experience.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><div id="scrollProgress"></div></div>
 <canvas id="sparks" aria-hidden="true"></canvas>
+<canvas id="world3d" aria-hidden="true"></canvas>
+<nav class="chapter-nav" aria-label="Explore the chapters">
+  <a href="#hero" aria-label="Opening" aria-current="location"><span>Opening</span></a>
+  <a href="#worlds" aria-label="The Four Worlds"><span>The Four Worlds</span></a>
+  <a href="#harmony-feature" aria-label="Dance for Harmony"><span>Dance for Harmony</span></a>
+  <a href="#emma" aria-label="Meet Emma"><span>Meet Emma</span></a>
+  <a href="#orb" aria-label="Choose Love"><span>Choose Love</span></a>
+  <a href="#cta" aria-label="Come Play"><span>Come Play</span></a>
+</nav>
+<main id="main" tabindex="-1">
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <video class="hero__bg" id="heroVid" autoplay muted loop playsinline preload="auto" poster="images/exp-texture.png">
-    <source src="media/exp-hero.mp4" type="video/mp4">
-  </video>
+  <img class="hero__portrait" id="heroPhoto" src="images/emma-ballet.jpg" alt="Emma posing in her pink ballet outfit" width="1500" height="2000" fetchpriority="high" loading="eager" decoding="async" draggable="false">
   <div class="hero__scrim"></div>
+  <div class="hero__ambient hero__ambient--one" aria-hidden="true"></div>
+  <div class="hero__ambient hero__ambient--two" aria-hidden="true"></div>
+  <div class="hero__portal" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="hero__meta"><span>01 / A world of possibility</span><span class="interaction-hint">Move to explore · Drag or tap the magic</span></div>
+  <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" hidden>Pause motion</button>
   <div class="hero__inner">
-    <div>
+    <div class="hero__scene">
+      <div class="hero__entrance">
       <p class="kicker">Emma's Play World</p>
-      <h1 class="pop">Love&nbsp;Creates<br>Harmony</h1>
-      <p class="hero__sub">A bright children's movement of dance, kindness and multicultural harmony — led by a little global leader with a big heart.</p>
+      <div class="hero__rig">
+      <h1 class="hero__title" aria-label="Love Creates Harmony">
+        <span class="hero__line" data-text="Love Creates" aria-hidden="true"><span class="hero__face">Love Creates</span></span>
+        <span class="hero__line" data-text="Harmony" aria-hidden="true"><span class="hero__face">Harmony</span></span>
+      </h1>
+      </div>
+      <p class="hero__sub">Free videos for ages 4–12. Dance, create and discover kindness together with a parent.</p>
+      <div class="hero__actions"><a class="btn btn--main" href="/#watch">Watch Emma <span aria-hidden="true">↗</span></a><a class="btn hero__explore" href="#worlds">Explore Worlds <span aria-hidden="true">↓</span></a></div>
+      </div>
     </div>
   </div>
-  <div class="scrollcue">scroll<span></span></div>
+  <button class="hero__replay" id="replayEntrance" type="button" aria-label="Replay the opening animation" hidden><span class="hero__replay-icon" aria-hidden="true">↻</span><span>Replay the magic</span></button>
+  <a class="scrollcue" href="#worlds" aria-label="Scroll to the Four Worlds">Scroll to discover<span aria-hidden="true"></span></a>
 </section>
 
 <!-- STATEMENT -->
@@ -180,25 +88,26 @@
 <!-- FOUR WORLDS -->
 <section class="section worlds" id="worlds">
   <div class="wrap">
-    <p class="eyebrow reveal">Explore</p>
+    <p class="eyebrow reveal">01 / The Four Worlds</p>
     <h2 class="h2 reveal">The Four Worlds</h2>
     <p class="lead reveal">Four bright ways Emma helps children of every culture feel they belong.</p>
     <div class="grid">
-      <div class="card card--dance reveal"><span class="em">🩰</span><h3>Dance</h3><p>Joy you can move to — routines and ballet kids can do at home.</p></div>
-      <div class="card card--create reveal"><span class="em">🎨</span><h3>Create</h3><p>Every child has something beautiful inside, waiting to be made.</p></div>
-      <div class="card card--culture reveal"><span class="em">🌍</span><h3>Culture</h3><p>Different roots, one harmony — many languages, one big heart.</p></div>
-      <div class="card card--kind reveal"><span class="em">💗</span><h3>Kindness</h3><p>Love is the language every child already speaks.</p></div>
+      <a class="card card--dance reveal" href="/#dance-world"><div class="card__surface"><span class="card__shine" aria-hidden="true"></span><span class="card__arrow" aria-hidden="true">↗</span><span class="em" aria-hidden="true">🩰</span><h3>Dance</h3><p>Joy you can move to. Find a dance to enjoy together.</p></div></a>
+      <a class="card card--create reveal" href="/#create-world"><div class="card__surface"><span class="card__shine" aria-hidden="true"></span><span class="card__arrow" aria-hidden="true">↗</span><span class="em" aria-hidden="true">🎨</span><h3>Create</h3><p>Make room for imagination, color and your own ideas.</p></div></a>
+      <a class="card card--culture reveal" href="/#culture-world"><div class="card__surface"><span class="card__shine" aria-hidden="true"></span><span class="card__arrow" aria-hidden="true">↗</span><span class="em" aria-hidden="true">🌍</span><h3>Culture</h3><p>Celebrate the stories and traditions that make families unique.</p></div></a>
+      <a class="card card--kind reveal" href="/#kindness-world"><div class="card__surface"><span class="card__shine" aria-hidden="true"></span><span class="card__arrow" aria-hidden="true">↗</span><span class="em" aria-hidden="true">💗</span><h3>Kindness</h3><p>Find small ways to help others feel welcome and included.</p></div></a>
     </div>
   </div>
 </section>
 
 <!-- DANCE FOR HARMONY -->
 <section class="feature" id="harmony-feature">
-  <video class="feature__bg" autoplay muted loop playsinline preload="metadata" poster="images/exp-harmony.png">
+  <video class="feature__bg" aria-hidden="true" tabindex="-1" muted loop playsinline preload="none" poster="images/exp-harmony.png">
     <source src="media/exp-kindness.mp4" type="video/mp4">
   </video>
   <div class="feature__scrim"></div>
   <div class="wrap">
+    <p class="eyebrow reveal">02 / A shared rhythm</p>
     <h2 class="pop reveal">Different rhythms.<br>One heart.</h2>
     <span class="tag reveal">#DanceForHarmony</span>
   </div>
@@ -207,9 +116,9 @@
 <!-- MEET EMMA (real photo) -->
 <section class="section emma-sec" id="emma">
   <div class="wrap emma">
-    <div class="emma__photo"><img src="images/emma-ballet.jpg" alt="Emma in a pink ballet leotard"><div class="frame"></div></div>
+    <div class="emma__photo"><img src="images/emma-ballet.jpg" alt="Emma in a pink ballet leotard" width="1500" height="2000" loading="lazy" decoding="async"><div class="frame"></div></div>
     <div>
-      <p class="eyebrow reveal">Meet Emma</p>
+      <p class="eyebrow reveal">03 / Meet Emma</p>
       <h2 class="h2 reveal">A brave beginning turned into a beautiful contribution.</h2>
       <p class="lead reveal">Emma came into the world early and fragile — a premature-heart survivor. Her spirit wasn't fragile at all. Today she dances, creates and leads, showing every child that a hard start can become something beautiful.</p>
     </div>
@@ -219,7 +128,8 @@
 <!-- HARMONY ORB -->
 <section class="section harmony" id="orb">
   <div class="wrap">
-    <img class="orb" src="images/exp-harmony.png" alt="A glowing globe of pastel light symbolizing harmony">
+    <p class="eyebrow reveal">04 / Choose love</p>
+    <div class="orb-stage"><span class="orb__ring" aria-hidden="true"></span><span class="orb__ring orb__ring--two" aria-hidden="true"></span><img class="orb" src="images/exp-harmony.png" alt="A glowing globe of pastel light symbolizing harmony" width="1344" height="752" loading="lazy" decoding="async"></div>
     <h2 class="reveal">When we choose love, we create harmony.</h2>
   </div>
 </section>
@@ -227,6 +137,7 @@
 <!-- CTA -->
 <section class="cta" id="cta">
   <div class="wrap">
+    <p class="eyebrow">05 / Keep exploring</p>
     <h2>Come play with us!</h2>
     <div class="btns">
       <a class="btn btn--main" href="/">Enter Emma's World</a>
@@ -235,11 +146,13 @@
   </div>
 </section>
 
+</main>
 <footer>
-  <img src="images/logo.jpg" alt="Emma's Play World" onerror="this.style.display='none'">
+  <img src="images/logo.jpg" alt="Emma's Play World" width="1079" height="1048" loading="lazy" decoding="async" onerror="this.style.display='none'">
   <div>Emma's Play World — a parent-managed, multilingual children's movement.</div>
   <div style="margin-top:10px">
     <a href="/">emmasplayworld.com</a> ·
+    <a href="/#safety">For Parents</a> ·
     <a href="https://www.tiktok.com/@emmaspayworld" target="_blank" rel="noopener">TikTok</a> ·
     <a href="https://www.instagram.com/emmas.playworld" target="_blank" rel="noopener">Instagram</a>
   </div>
@@ -249,76 +162,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script>
-(function(){
-  "use strict";
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  try{
-    var stmt = document.getElementById("stmt");
-    if(stmt){
-      stmt.innerHTML = stmt.innerHTML.replace(/(<span class="heart">.*?<\/span>)|(\S+)/g, function(m,keep,word){
-        if(keep) return '<span class="w" style="display:inline-block">'+keep+'</span> ';
-        return '<span class="w">'+word+'</span> ';
-      });
-    }
-  }catch(e){}
-
-  if(reduce || !window.gsap){
-    document.querySelectorAll('.reveal,.w').forEach(function(el){el.style.opacity=1;el.style.transform='none';});
-    return;
-  }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  try{
-    if(window.Lenis){
-      var lenis = new Lenis({lerp:.1,smoothWheel:true});
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function(t){ lenis.raf(t*1000); });
-      gsap.ticker.lagSmoothing(0);
-    }
-  }catch(e){}
-
-  gsap.timeline({scrollTrigger:{trigger:"#hero",start:"top top",end:"+=100%",scrub:true,pin:true}})
-    .to("#heroVid",{scale:1.25,ease:"none"},0)
-    .to(".hero__inner",{yPercent:-26,opacity:0,ease:"none"},0)
-    .to(".scrollcue",{opacity:0,ease:"none"},0);
-
-  gsap.to(".statement .w",{opacity:1,stagger:.08,ease:"none",
-    scrollTrigger:{trigger:"#statement",start:"top 70%",end:"bottom 60%",scrub:true}});
-
-  gsap.utils.toArray(".reveal").forEach(function(el){
-    gsap.to(el,{opacity:1,y:0,duration:.9,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 85%"}});
-  });
-
-  gsap.to(".worlds .card",{opacity:1,y:0,stagger:.12,duration:.8,ease:"power3.out",
-    scrollTrigger:{trigger:".grid",start:"top 80%"}});
-
-  gsap.fromTo(".emma__photo img",{yPercent:-8},{yPercent:8,ease:"none",scrollTrigger:{trigger:"#emma",start:"top bottom",end:"bottom top",scrub:true}});
-  gsap.fromTo(".orb",{scale:.9,rotate:-6},{scale:1.05,rotate:6,ease:"none",scrollTrigger:{trigger:"#orb",start:"top bottom",end:"bottom top",scrub:true}});
-  gsap.to(".feature__bg",{scale:1.25,ease:"none",scrollTrigger:{trigger:"#harmony-feature",start:"top bottom",end:"bottom top",scrub:true}});
-
-  ScrollTrigger.refresh();
-})();
-
-/* Bright floating sparkles */
-(function(){
-  var c=document.getElementById("sparks"); if(!c) return;
-  var ctx=c.getContext("2d"), w,h,parts=[],raf;
-  var colors=["#FF2EA6","#FFB300","#2FC4F5","#9D3BE8","#3FD17F"];
-  function size(){ w=c.width=innerWidth; h=c.height=innerHeight; }
-  function make(){ return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.4+.5,
-    s:Math.random()*.4+.1,o:Math.random()*.5+.3,col:colors[(Math.random()*colors.length)|0]}; }
-  function init(){ size(); parts=[]; var n=Math.min(95,Math.round(w/15)); for(var i=0;i<n;i++)parts.push(make()); }
-  function tick(){ ctx.clearRect(0,0,w,h);
-    for(var i=0;i<parts.length;i++){var p=parts[i]; p.y-=p.s; if(p.y<-5){p.y=h+5;p.x=Math.random()*w;}
-      ctx.globalAlpha=p.o; ctx.fillStyle=p.col; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.28); ctx.fill();}
-    ctx.globalAlpha=1; raf=requestAnimationFrame(tick); }
-  if(!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)){
-    init(); tick(); addEventListener("resize",init);
-  }
-})();
-</script>
+<script src="experience.js"></script>
+<script type="module" src="experience-3d.js"></script>
 </body>
 </html>
