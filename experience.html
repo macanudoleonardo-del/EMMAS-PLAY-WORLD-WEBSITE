@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Emma's Play World — Love Creates Harmony</title>
-<meta name="description" content="A cinematic journey into Emma's Play World — a bright, joyful children's movement of dance, kindness and multicultural harmony. Love Creates Harmony. #DanceForHarmony">
+<meta name="description" content="Explore Emma's Play World: free family-friendly videos for ages 4–12, celebrating dance, creativity, culture and kindness. Love Creates Harmony.">
 <link rel="canonical" href="https://www.emmasplayworld.com/experience.html">
 <meta name="robots" content="index, follow">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -41,6 +41,10 @@
     overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased}
   img,video{display:block;max-width:100%}
   a{color:inherit}
+  [hidden]{display:none!important}
+  :focus-visible{outline:3px solid var(--ink);outline-offset:6px}
+  .skip-link{position:fixed;top:12px;left:12px;z-index:10;padding:12px 20px;background:var(--cream);color:var(--ink);border-radius:999px;transform:translateY(-160%)}
+  .skip-link:focus{transform:none}
   .wrap{width:min(1100px,92vw);margin-inline:auto}
   h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.01em}
   /* vivid outlined display text — reads on any background, kid-sticker pop */
@@ -64,17 +68,21 @@
   .hero h1{font-size:clamp(3rem,10.5vw,9rem)}
   .hero__sub{max-width:38ch;margin:1.7rem auto 0;color:var(--ink);font-weight:600;
     font-size:clamp(1.05rem,2.5vw,1.4rem);text-shadow:0 2px 16px #fff,0 1px 2px #fff}
+  .hero__actions{margin-top:1.7rem}
+  .hero__explore{display:inline-block;margin-top:14px;font-size:.95rem;font-weight:700;text-underline-offset:4px}
+  .motion-toggle{position:absolute;top:18px;right:18px;z-index:4;border:1px solid var(--purple);border-radius:999px;padding:10px 16px;background:var(--cream);color:var(--ink);font:600 .85rem var(--body);cursor:pointer}
   .scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
-    color:var(--purple);font-weight:700;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;text-shadow:0 1px 10px #fff}
+    color:var(--ink);font-weight:700;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;text-align:center;text-shadow:0 1px 10px #fff;text-decoration:none}
   .scrollcue span{display:block;width:3px;height:44px;margin:10px auto 0;border-radius:3px;
     background:linear-gradient(var(--pink),var(--sky));animation:cue 1.6s ease-in-out infinite}
+  [data-motion="paused"] .scrollcue span{animation:none}
   @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.5;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
 
   /* ---------- STATEMENT ---------- */
   .statement{position:relative;padding:clamp(120px,22vh,250px) 0;text-align:center;background:
     radial-gradient(90% 60% at 50% 30%,rgba(47,196,245,.14),transparent 60%),var(--cream)}
   .statement h2{font-size:clamp(2rem,7vw,5.2rem);color:var(--ink)}
-  .statement .w{display:inline-block;opacity:.12}
+  .statement .w{display:inline-block}
   .heart{color:var(--pink);-webkit-text-fill-color:var(--pink)}
 
   .section{position:relative;padding:clamp(90px,14vh,170px) 0}
@@ -89,7 +97,7 @@
     radial-gradient(70% 50% at 90% 90%,rgba(47,196,245,.12),transparent 55%),var(--cream)}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:3rem}
   @media(max-width:720px){.grid{grid-template-columns:1fr}}
-  .card{border-radius:30px;padding:38px 32px;color:#fff;will-change:transform,opacity;
+  .card{display:block;text-decoration:none;border-radius:30px;padding:38px 32px;color:#fff;will-change:transform,opacity;
     box-shadow:0 22px 50px rgba(58,18,80,.18);transition:transform .3s ease}
   .card:hover{transform:translateY(-6px) rotate(-1deg)}
   .card .em{font-size:2.8rem;display:block;margin-bottom:.5rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
@@ -97,9 +105,10 @@
   .card p{color:rgba(255,255,255,.95);font-size:1.02rem;font-weight:500}
   .card--dance{background:linear-gradient(145deg,#FF2EA6,#FF6FB5)}
   .card--create{background:linear-gradient(145deg,#2FC4F5,#4ad7c0)}
-  .card--culture{background:linear-gradient(145deg,#9D3BE8,#c061e6)}
+  .card--culture{background:linear-gradient(145deg,#9D3BE8,#A24CE0)}
   .card--kind{background:linear-gradient(145deg,#FFB300,#FF7A59);color:#4a2600}
   .card--kind h3,.card--kind p{color:#4a2600}
+  .card--dance h3,.card--dance p,.card--create h3,.card--create p{color:#30103f}
 
   /* Full-bleed video feature */
   .feature{position:relative;height:100svh;min-height:560px;overflow:hidden;display:grid;place-items:center;text-align:center}
@@ -126,7 +135,7 @@
   .harmony{text-align:center;overflow:hidden;background:
     radial-gradient(80% 60% at 50% 20%,rgba(47,196,245,.18),transparent 60%),
     linear-gradient(180deg,#eafaff,var(--cream))}
-  .orb{width:min(540px,80vw);margin:0 auto 2.4rem;border-radius:50%;
+  .orb{width:min(540px,80vw);height:auto;margin:0 auto 2.4rem;border-radius:50%;
     filter:drop-shadow(0 0 50px rgba(157,59,232,.4));will-change:transform}
   .harmony h2{font-size:clamp(1.9rem,5.6vw,3.8rem);max-width:17ch;margin-inline:auto;color:var(--ink)}
 
@@ -140,34 +149,40 @@
   .btn--main{background:var(--gold);color:#4a2600;box-shadow:0 14px 34px rgba(0,0,0,.2)}
   .btn--ghost{background:rgba(255,255,255,.18);border:2px solid #fff;color:#fff}
   .btn:hover{transform:translateY(-4px) scale(1.03)}
+  .btn{max-width:100%;text-align:center}
+  @media(max-height:740px) and (min-width:721px){.hero h1{font-size:clamp(3rem,8.5vw,7rem)}.hero__sub{margin-top:1rem}.hero__actions{margin-top:1rem}}
   footer{background:var(--ink);padding:46px 0;text-align:center;color:rgba(255,255,255,.75);font-size:.9rem}
   footer img{width:72px;height:72px;border-radius:50%;margin:0 auto 14px;object-fit:cover;border:3px solid var(--gold)}
   footer a{color:var(--gold);text-decoration:none;margin:0 10px;font-weight:600}
-  .reveal{opacity:0;transform:translateY(40px);will-change:transform,opacity}
+  .reveal{will-change:transform,opacity}
 
   @media (prefers-reduced-motion: reduce){
-    *{animation:none!important}
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
     .reveal,.statement .w{opacity:1!important;transform:none!important}
   }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <canvas id="sparks" aria-hidden="true"></canvas>
+<main id="main" tabindex="-1">
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <video class="hero__bg" id="heroVid" autoplay muted loop playsinline preload="auto" poster="images/exp-texture.png">
+  <video class="hero__bg" id="heroVid" aria-hidden="true" tabindex="-1" muted loop playsinline preload="metadata" poster="images/exp-texture.png">
     <source src="media/exp-hero.mp4" type="video/mp4">
   </video>
   <div class="hero__scrim"></div>
+  <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" hidden>Pause motion</button>
   <div class="hero__inner">
     <div>
       <p class="kicker">Emma's Play World</p>
       <h1 class="pop">Love&nbsp;Creates<br>Harmony</h1>
-      <p class="hero__sub">A bright children's movement of dance, kindness and multicultural harmony — led by a little global leader with a big heart.</p>
+      <p class="hero__sub">Free family-friendly videos for ages 4–12, celebrating dance, creativity, culture and kindness. Enjoy them together with a parent.</p>
+      <div class="hero__actions"><a class="btn btn--main" href="/#watch">Watch Free Videos</a><br><a class="hero__explore" href="#worlds">Explore the Four Worlds</a></div>
     </div>
   </div>
-  <div class="scrollcue">scroll<span></span></div>
+  <a class="scrollcue" href="#worlds" aria-label="Scroll to the Four Worlds">scroll<span aria-hidden="true"></span></a>
 </section>
 
 <!-- STATEMENT -->
@@ -184,17 +199,17 @@
     <h2 class="h2 reveal">The Four Worlds</h2>
     <p class="lead reveal">Four bright ways Emma helps children of every culture feel they belong.</p>
     <div class="grid">
-      <div class="card card--dance reveal"><span class="em">🩰</span><h3>Dance</h3><p>Joy you can move to — routines and ballet kids can do at home.</p></div>
-      <div class="card card--create reveal"><span class="em">🎨</span><h3>Create</h3><p>Every child has something beautiful inside, waiting to be made.</p></div>
-      <div class="card card--culture reveal"><span class="em">🌍</span><h3>Culture</h3><p>Different roots, one harmony — many languages, one big heart.</p></div>
-      <div class="card card--kind reveal"><span class="em">💗</span><h3>Kindness</h3><p>Love is the language every child already speaks.</p></div>
+      <a class="card card--dance reveal" href="/#dance-world"><span class="em" aria-hidden="true">🩰</span><h3>Dance</h3><p>Joy you can move to. Find a dance to enjoy together.</p></a>
+      <a class="card card--create reveal" href="/#create-world"><span class="em" aria-hidden="true">🎨</span><h3>Create</h3><p>Make room for imagination, color and your own ideas.</p></a>
+      <a class="card card--culture reveal" href="/#culture-world"><span class="em" aria-hidden="true">🌍</span><h3>Culture</h3><p>Celebrate the stories and traditions that make families unique.</p></a>
+      <a class="card card--kind reveal" href="/#kindness-world"><span class="em" aria-hidden="true">💗</span><h3>Kindness</h3><p>Find small ways to help others feel welcome and included.</p></a>
     </div>
   </div>
 </section>
 
 <!-- DANCE FOR HARMONY -->
 <section class="feature" id="harmony-feature">
-  <video class="feature__bg" autoplay muted loop playsinline preload="metadata" poster="images/exp-harmony.png">
+  <video class="feature__bg" aria-hidden="true" tabindex="-1" muted loop playsinline preload="none" poster="images/exp-harmony.png">
     <source src="media/exp-kindness.mp4" type="video/mp4">
   </video>
   <div class="feature__scrim"></div>
@@ -207,7 +222,7 @@
 <!-- MEET EMMA (real photo) -->
 <section class="section emma-sec" id="emma">
   <div class="wrap emma">
-    <div class="emma__photo"><img src="images/emma-ballet.jpg" alt="Emma in a pink ballet leotard"><div class="frame"></div></div>
+    <div class="emma__photo"><img src="images/emma-ballet.jpg" alt="Emma in a pink ballet leotard" width="1500" height="2000" loading="lazy" decoding="async"><div class="frame"></div></div>
     <div>
       <p class="eyebrow reveal">Meet Emma</p>
       <h2 class="h2 reveal">A brave beginning turned into a beautiful contribution.</h2>
@@ -219,7 +234,7 @@
 <!-- HARMONY ORB -->
 <section class="section harmony" id="orb">
   <div class="wrap">
-    <img class="orb" src="images/exp-harmony.png" alt="A glowing globe of pastel light symbolizing harmony">
+    <img class="orb" src="images/exp-harmony.png" alt="A glowing globe of pastel light symbolizing harmony" width="1344" height="752" loading="lazy" decoding="async">
     <h2 class="reveal">When we choose love, we create harmony.</h2>
   </div>
 </section>
@@ -235,11 +250,13 @@
   </div>
 </section>
 
+</main>
 <footer>
-  <img src="images/logo.jpg" alt="Emma's Play World" onerror="this.style.display='none'">
+  <img src="images/logo.jpg" alt="Emma's Play World" width="1079" height="1048" loading="lazy" decoding="async" onerror="this.style.display='none'">
   <div>Emma's Play World — a parent-managed, multilingual children's movement.</div>
   <div style="margin-top:10px">
     <a href="/">emmasplayworld.com</a> ·
+    <a href="/#safety">For Parents</a> ·
     <a href="https://www.tiktok.com/@emmaspayworld" target="_blank" rel="noopener">TikTok</a> ·
     <a href="https://www.instagram.com/emmas.playworld" target="_blank" rel="noopener">Instagram</a>
   </div>
@@ -252,72 +269,134 @@
 <script>
 (function(){
   "use strict";
-  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  try{
-    var stmt = document.getElementById("stmt");
-    if(stmt){
-      stmt.innerHTML = stmt.innerHTML.replace(/(<span class="heart">.*?<\/span>)|(\S+)/g, function(m,keep,word){
-        if(keep) return '<span class="w" style="display:inline-block">'+keep+'</span> ';
-        return '<span class="w">'+word+'</span> ';
-      });
-    }
-  }catch(e){}
-
-  if(reduce || !window.gsap){
-    document.querySelectorAll('.reveal,.w').forEach(function(el){el.style.opacity=1;el.style.transform='none';});
-    return;
-  }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  try{
-    if(window.Lenis){
-      var lenis = new Lenis({lerp:.1,smoothWheel:true});
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function(t){ lenis.raf(t*1000); });
-      gsap.ticker.lagSmoothing(0);
-    }
-  }catch(e){}
-
-  gsap.timeline({scrollTrigger:{trigger:"#hero",start:"top top",end:"+=100%",scrub:true,pin:true}})
-    .to("#heroVid",{scale:1.25,ease:"none"},0)
-    .to(".hero__inner",{yPercent:-26,opacity:0,ease:"none"},0)
-    .to(".scrollcue",{opacity:0,ease:"none"},0);
-
-  gsap.to(".statement .w",{opacity:1,stagger:.08,ease:"none",
-    scrollTrigger:{trigger:"#statement",start:"top 70%",end:"bottom 60%",scrub:true}});
-
-  gsap.utils.toArray(".reveal").forEach(function(el){
-    gsap.to(el,{opacity:1,y:0,duration:.9,ease:"power3.out",scrollTrigger:{trigger:el,start:"top 85%"}});
-  });
-
-  gsap.to(".worlds .card",{opacity:1,y:0,stagger:.12,duration:.8,ease:"power3.out",
-    scrollTrigger:{trigger:".grid",start:"top 80%"}});
-
-  gsap.fromTo(".emma__photo img",{yPercent:-8},{yPercent:8,ease:"none",scrollTrigger:{trigger:"#emma",start:"top bottom",end:"bottom top",scrub:true}});
-  gsap.fromTo(".orb",{scale:.9,rotate:-6},{scale:1.05,rotate:6,ease:"none",scrollTrigger:{trigger:"#orb",start:"top bottom",end:"bottom top",scrub:true}});
-  gsap.to(".feature__bg",{scale:1.25,ease:"none",scrollTrigger:{trigger:"#harmony-feature",start:"top bottom",end:"bottom top",scrub:true}});
-
-  ScrollTrigger.refresh();
-})();
-
-/* Bright floating sparkles */
-(function(){
-  var c=document.getElementById("sparks"); if(!c) return;
-  var ctx=c.getContext("2d"), w,h,parts=[],raf;
+  var preference = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+  var paused = !!(preference && preference.matches);
+  var control = document.getElementById("motionToggle");
+  var videos = document.querySelectorAll(".hero__bg,.feature__bg");
+  var wide = innerWidth>820;
+  var animationContext = null, lenis = null, lenisTick = null;
+  var c = document.getElementById("sparks"), ctx = null, w = 0, h = 0, parts = [], raf = null;
+  try { if(c) ctx = c.getContext("2d"); } catch(e) {}
   var colors=["#FF2EA6","#FFB300","#2FC4F5","#9D3BE8","#3FD17F"];
-  function size(){ w=c.width=innerWidth; h=c.height=innerHeight; }
   function make(){ return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*2.4+.5,
     s:Math.random()*.4+.1,o:Math.random()*.5+.3,col:colors[(Math.random()*colors.length)|0]}; }
-  function init(){ size(); parts=[]; var n=Math.min(95,Math.round(w/15)); for(var i=0;i<n;i++)parts.push(make()); }
-  function tick(){ ctx.clearRect(0,0,w,h);
+  function size(){
+    if(!ctx) return;
+    w=c.width=innerWidth; h=c.height=innerHeight;
+    parts=[]; var n=Math.min(95,Math.round(w/15));
+    for(var i=0;i<n;i++) parts.push(make());
+  }
+  function tick(){
+    raf=null;
+    if(!ctx || paused || document.hidden) return;
+    ctx.clearRect(0,0,w,h);
     for(var i=0;i<parts.length;i++){var p=parts[i]; p.y-=p.s; if(p.y<-5){p.y=h+5;p.x=Math.random()*w;}
       ctx.globalAlpha=p.o; ctx.fillStyle=p.col; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.28); ctx.fill();}
-    ctx.globalAlpha=1; raf=requestAnimationFrame(tick); }
-  if(!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)){
-    init(); tick(); addEventListener("resize",init);
+    ctx.globalAlpha=1; raf=requestAnimationFrame(tick);
   }
+  function syncParticles(){
+    if(paused || document.hidden){
+      if(raf !== null) cancelAnimationFrame(raf);
+      raf=null;
+      if(ctx) ctx.clearRect(0,0,w,h);
+    }else if(ctx && raf === null){ tick(); }
+  }
+  function syncVideos(){
+    videos.forEach(function(video){
+      var rect=video.getBoundingClientRect();
+      if(!paused && !document.hidden && rect.bottom>0 && rect.top<innerHeight){
+        var play=video.play();
+        if(play && play.catch) play.catch(function(){});
+      }else{ video.pause(); }
+    });
+  }
+  function clearAnimations(){
+    if(lenisTick && window.gsap) window.gsap.ticker.remove(lenisTick);
+    lenisTick=null;
+    if(lenis){ lenis.destroy(); lenis=null; }
+    if(animationContext){ animationContext.revert(); animationContext=null; }
+  }
+  function animate(){
+    if(paused || !window.gsap || !window.ScrollTrigger || !window.gsap.context) return;
+    try{
+      var gsap=window.gsap, ScrollTrigger=window.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+      var stmt=document.getElementById("stmt");
+      if(stmt && !stmt.querySelector(".w")){
+        stmt.innerHTML=stmt.innerHTML.replace(/(<span class="heart">.*?<\/span>)|(\S+)/g,function(m,keep,word){
+          return '<span class="w">'+(keep || word)+'</span> ';
+        });
+      }
+      animationContext=gsap.context(function(){});
+      animationContext.add(function(){
+        gsap.timeline({scrollTrigger:{trigger:"#hero",start:"top top",end:"+=100%",scrub:true,pin:innerWidth>820}})
+          .to("#heroVid",{scale:1.25,ease:"none"},0)
+          .to(".hero__inner",{yPercent:-26,opacity:0,ease:"none"},0)
+          .to(".scrollcue",{opacity:0,ease:"none"},0);
+        gsap.fromTo(".statement .w",{opacity:.12},{opacity:1,stagger:.08,ease:"none",
+          scrollTrigger:{trigger:"#statement",start:"top 70%",end:"bottom 60%",scrub:true}});
+        gsap.utils.toArray(".reveal").forEach(function(el){
+          gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:.9,ease:"power3.out",
+            scrollTrigger:{trigger:el,start:"top 85%",once:true}});
+        });
+        gsap.fromTo(".emma__photo img",{yPercent:-8},{yPercent:8,ease:"none",scrollTrigger:{trigger:"#emma",start:"top bottom",end:"bottom top",scrub:true}});
+        gsap.fromTo(".orb",{scale:.9,rotate:-6},{scale:1.05,rotate:6,ease:"none",scrollTrigger:{trigger:"#orb",start:"top bottom",end:"bottom top",scrub:true}});
+        gsap.to(".feature__bg",{scale:1.25,ease:"none",scrollTrigger:{trigger:"#harmony-feature",start:"top bottom",end:"bottom top",scrub:true}});
+      });
+      if(window.Lenis && innerWidth>820){
+        lenis=new window.Lenis({lerp:.1,smoothWheel:true});
+        lenis.on("scroll",ScrollTrigger.update);
+        lenisTick=function(t){if(lenis) lenis.raf(t*1000);};
+        gsap.ticker.add(lenisTick);
+      }
+      ScrollTrigger.refresh();
+    }catch(e){
+      clearAnimations();
+      document.querySelectorAll(".reveal,.w").forEach(function(el){el.style.opacity=1;el.style.transform="none";});
+    }
+  }
+  function setMotion(value){
+    paused=value;
+    document.documentElement.setAttribute("data-motion",paused?"paused":"playing");
+    if(control){control.textContent=paused?"Resume motion":"Pause motion";control.setAttribute("aria-pressed",String(paused));}
+    clearAnimations();
+    if(!paused) animate();
+    syncVideos(); syncParticles();
+  }
+  if(control){
+    control.hidden=false;
+    control.addEventListener("click",function(){setMotion(!paused);});
+  }
+  if(preference){
+    var changed=function(event){setMotion(event.matches);};
+    if(preference.addEventListener) preference.addEventListener("change",changed);
+    else if(preference.addListener) preference.addListener(changed);
+  }
+  if(window.IntersectionObserver){
+    var observer=new IntersectionObserver(syncVideos);
+    videos.forEach(function(video){observer.observe(video);});
+  }else{addEventListener("scroll",syncVideos,{passive:true});}
+  document.addEventListener("visibilitychange",function(){syncVideos();syncParticles();});
+  addEventListener("resize",function(){
+    size();
+    if(wide !== (innerWidth>820)){
+      wide=innerWidth>820;
+      clearAnimations();
+      if(!paused) animate();
+    }
+    syncVideos();
+  });
+  size(); setMotion(paused);
+  document.addEventListener("focusin",function(event){
+    var card=event.target.closest && event.target.closest(".reveal");
+    if(card && window.gsap) window.gsap.to(card,{opacity:1,y:0,duration:0,overwrite:true});
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener("click",function(){
+      var target=document.getElementById(link.getAttribute("href").slice(1));
+      if(target && lenis) lenis.scrollTo(target,{immediate:true});
+    });
+  });
 })();
 </script>
 </body>

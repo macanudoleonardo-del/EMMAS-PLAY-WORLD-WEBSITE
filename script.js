@@ -116,44 +116,13 @@
   if (year) year.textContent = String(new Date().getFullYear());
 
   /* ── contact form ───────────────────────────────────────────
-     NOT CONNECTED yet. The Digital Authority Blueprint (Phase 2)
-     calls for Resend API + WhatsApp routing to a parent/manager
-     (partnerships@emmasplayworld.com). Until that's wired up, this
-     validates and then says it isn't live rather than dropping the
-     message. See MARKETING.md → "Tech stack".
+     The unavailable notice appears before the disabled fields.
+     Keep submission blocked until message delivery is configured.
   ── */
   var form = document.getElementById('contactForm');
-  var msg = document.getElementById('contactMsg');
-
-  var NOT_LIVE = {
-    en: '⚠ Form not connected yet — hook up Resend/WhatsApp (see MARKETING.md).',
-    es: '⚠ Formulario aún no conectado — configura Resend/WhatsApp (ver MARKETING.md).',
-    zh: '⚠ 表单尚未连接——请配置 Resend/WhatsApp（见 MARKETING.md）。',
-    ko: '⚠ 폼이 아직 연결되지 않았어요 — Resend/WhatsApp를 연결하세요 (MARKETING.md 참고).',
-    fr: '⚠ Formulaire pas encore connecté — configurez Resend/WhatsApp (voir MARKETING.md).'
-  };
-  var FILL = {
-    en: 'Please fill in the required fields.',
-    es: 'Por favor completa los campos requeridos.',
-    zh: '请填写必填项。',
-    ko: '필수 항목을 입력해 주세요.',
-    fr: 'Veuillez remplir les champs obligatoires.'
-  };
-
-  if (form && msg) {
+  if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var lang = root.getAttribute('lang') || 'en';
-      if (!(lang in NOT_LIVE)) lang = 'en';
-
-      if (!form.checkValidity()) {
-        msg.textContent = FILL[lang];
-        var firstInvalid = form.querySelector(':invalid');
-        if (firstInvalid) firstInvalid.focus();
-        return;
-      }
-      msg.textContent = NOT_LIVE[lang];
-      console.warn("[Emma's Play World] Contact form is a placeholder. See MARKETING.md → Tech stack.");
     });
   }
 })();
