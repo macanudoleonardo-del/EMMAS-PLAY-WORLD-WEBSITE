@@ -217,9 +217,10 @@
   function tick(time) {
     frame = 0;
     if (!canRender() || paused()) return;
-    var delta = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 1 / 60;
+    var advance = lastTime ? Math.max(0, (time - lastTime) / 1000) : 1 / 60;
+    var delta = Math.min(advance, 0.05);
     lastTime = time;
-    elapsed += delta;
+    elapsed += advance;
     try { draw(true, delta); } catch (error) { fallback(); return; }
     frame = requestAnimationFrame(tick);
   }
