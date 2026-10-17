@@ -40,6 +40,21 @@
   var rayPointer;
   var hovered = null;
   var dragging = null;
+  var pendingTap = null;
+  var lastHitPoint = null;
+  var introStart = 0;
+  var titleStart = 0;
+  var titleGroup = null;
+  var titleLines = [];
+  var titleMaterials = [];
+  var titleShadows = [];
+  var titleReady = false;
+  var titleBuilt = false;
+  var titleHero = document.getElementById('hero');
+  var titleActor = { isTitle: true, dragX: 0, dragY: 0, impactAt: -Infinity };
+  var burstMesh;
+  var burstDummy;
+  var particles = [];
   var previousCursor = body.style.cursor;
 
   function setStatus(status) {
@@ -87,6 +102,7 @@
   function resetInteraction() {
     hovered = null;
     dragging = null;
+    pendingTap = null;
     body.style.cursor = previousCursor;
     if (pointerTarget) pointerTarget.set(0, 0);
     if (pointerSmooth) pointerSmooth.set(0, 0);
@@ -96,6 +112,7 @@
     if (disposed) return;
     disposed = true;
     ready = false;
+    root.removeAttribute('data-title3d');
     stopFrames();
     resetInteraction();
     if (motionObserver) motionObserver.disconnect();
@@ -156,23 +173,39 @@
     if (layoutDirty) layout();
     var follow = animated ? 1 - Math.exp(-delta * 7) : 1;
     pointerSmooth.lerp(pointerTarget, animated ? follow * 0.65 : 1);
-    camera.position.x = paused() ? 0 : pointerSmooth.x * 0.18;
-    camera.position.y = paused() ? 0 : pointerSmooth.y * 0.12;
+    camera.position.x = paused() ? 0 : pointerSmooth.x * 0.5;
+    camera.position.y = paused() ? 0 : pointerSmooth.y * 0.32;
     camera.lookAt(0, 0, 0);
+    camera.updateMatrixWorld(true);
+    var intro = paused() ? 1 : clamp((elapsed - introStart) / 1.8, 0, 1);
+    var arrival = 1 - Math.pow(1 - intro, 3);
 
     actors.forEach(function (actor) {
       actor.group.position.lerp(actor.target, follow);
       if (animated) actor.group.position.y += Math.sin(elapsed * 0.65 + actor.seed) * 0.1 * follow;
+      var spread = (1 - arrival) * (actor.seed % 2 ? -1 : 1);
+      actor.group.position.x += (actor.target.x >= 0 ? 1 : -1) * (1 - arrival) * 0.15;
+      actor.group.position.z = actor.depth - (1 - arrival) * 4.8;
+      var age = elapsed - actor.impactAt;
+      var kick = age < 2.2 && !paused() ? Math.sin(age * 17) * Math.exp(-age * 3.7) : 0;
+      var impactSpin = age < 2.2 && !paused() ? Math.PI * 2 * (1 - Math.exp(-age * 4.5)) : 0;
       var hoverScale = (hovered === actor || (dragging && dragging.actor === actor)) && !paused() ? 1.13 : 1;
-      var targetScale = actor.size * hoverScale;
+      var targetScale = actor.size * hoverScale * (0.58 + arrival * 0.42) * (1 + kick * 0.3);
       actor.group.scale.setScalar(mix(actor.group.scale.x, targetScale, follow));
       actor.group.rotation.set(
-        actor.rotation[0] + actor.dragX + Math.sin(elapsed * 0.42 + actor.seed) * 0.13 + pointerSmooth.y * 0.09,
-        actor.rotation[1] + actor.dragY + (actor.spin ? elapsed * actor.spin : Math.sin(elapsed * 0.38) * 0.2) + pointerSmooth.x * 0.14,
-        actor.rotation[2] + Math.sin(elapsed * 0.31 + actor.seed) * 0.08
+        actor.rotation[0] + actor.dragX + Math.sin(elapsed * 0.42 + actor.seed) * 0.13 + pointerSmooth.y * 0.24 + spread * 0.65,
+        actor.rotation[1] + actor.dragY + (actor.spin ? elapsed * actor.spin : Math.sin(elapsed * 0.38) * 0.2) + pointerSmooth.x * 0.38 + impactSpin + (1 - arrival) * 1.7,
+        actor.rotation[2] + Math.sin(elapsed * 0.31 + actor.seed) * 0.08 + kick * 0.15
       );
     });
+    updateTitle();
+    updateBurst();
     renderer.render(scene, camera);
+    if (titleBuilt && !titleReady && titleGroup.visible && !document.hidden) {
+      titleReady = true;
+      root.setAttribute('data-title3d', 'ready');
+      Promise.resolve().then(function () { layoutDirty = true; requestFrame(); });
+    }
   }
 
   function renderStill() {
@@ -202,7 +235,15 @@
 
   function syncMotion() {
     stopFrames();
-    if (paused()) resetInteraction();
+    if (paused()) {
+      resetInteraction();
+      introStart = elapsed - 2;
+      titleStart = elapsed - 2;
+      particles = [];
+      if (burstMesh) burstMesh.visible = false;
+      actors.forEach(function (actor) { actor.impactAt = -Infinity; });
+      titleActor.impactAt = -Infinity;
+    }
     canvas.style.visibility = inView ? 'visible' : 'hidden';
     requestFrame();
   }
@@ -221,17 +262,28 @@
     scene.updateMatrixWorld(true);
     camera.updateMatrixWorld(true);
     raycaster.setFromCamera(rayPointer, camera);
-    var hits = raycaster.intersectObjects(actors.map(function (actor) { return actor.group; }), true);
+    var groups = actors.map(function (actor) { return actor.group; });
+    if (titleReady && titleGroup && titleGroup.visible) groups.push(titleGroup);
+    var hits = raycaster.intersectObjects(groups, true);
+    lastHitPoint = hits.length && hits[0].point ? hits[0].point.clone() : null;
     return hits.length ? hits[0].object.userData.actor || null : null;
   }
 
   function pointerMove(event) {
+    if (pendingTap && pendingTap.pointerId === event.pointerId) {
+      if (Math.hypot(event.clientX - pendingTap.x, event.clientY - pendingTap.y) >= 8) pendingTap.moved = true;
+      if (event.pointerType !== 'touch' && (event.buttons & 1) === 0) pendingTap = null;
+    }
     if (!desktopPointer(event)) return;
     pointerTarget.set(clamp(event.clientX / width * 2 - 1, -1, 1), clamp(1 - event.clientY / height * 2, -1, 1));
     if (dragging && dragging.pointerId === event.pointerId && (event.buttons & 1) === 0) dragging = null;
     if (dragging && dragging.pointerId === event.pointerId) {
       dragging.actor.dragY += (event.clientX - dragging.x) * 0.009;
       dragging.actor.dragX += (event.clientY - dragging.y) * 0.009;
+      if (dragging.actor.isTitle) {
+        dragging.actor.dragX = clamp(dragging.actor.dragX, -0.25, 0.25);
+        dragging.actor.dragY = clamp(dragging.actor.dragY, -0.3, 0.3);
+      }
       dragging.x = event.clientX;
       dragging.y = event.clientY;
       body.style.cursor = 'grabbing';
@@ -243,18 +295,25 @@
   }
 
   function pointerDown(event) {
-    if (!desktopPointer(event) || event.button !== 0 || event.isPrimary === false) return;
+    if (paused() || event.button !== 0 || event.isPrimary === false) return;
     var actor = hitActor(event);
     if (!actor) return;
-    dragging = { actor: actor, pointerId: event.pointerId, x: event.clientX, y: event.clientY };
-    hovered = actor;
-    body.style.cursor = 'grabbing';
+    pendingTap = { actor: actor, pointerId: event.pointerId, x: event.clientX, y: event.clientY, scroll: window.scrollY || 0, time: performance.now(), moved: false };
+    if (desktopPointer(event)) {
+      dragging = { actor: actor, pointerId: event.pointerId, x: event.clientX, y: event.clientY };
+      hovered = actor;
+      body.style.cursor = 'grabbing';
+    }
     requestFrame();
   }
 
   function pointerUp(event) {
-    if (!dragging || dragging.pointerId !== event.pointerId) return;
-    dragging = null;
+    if (pendingTap && pendingTap.pointerId === event.pointerId) {
+      var tap = pendingTap;
+      pendingTap = null;
+      if (!paused() && !tap.moved && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) < 8 && Math.abs((window.scrollY || 0) - tap.scroll) < 8 && performance.now() - tap.time < 500 && hitActor(event) === tap.actor) impact(tap.actor, lastHitPoint);
+    }
+    if (dragging && dragging.pointerId === event.pointerId) dragging = null;
     hovered = desktopPointer(event) ? hitActor(event) : null;
     body.style.cursor = hovered ? 'grab' : previousCursor;
     requestFrame();
@@ -263,12 +322,205 @@
   function addActor(group, options) {
     var actor = Object.assign({
       group: group, target: new THREE.Vector3(), size: 1, baseSize: 1,
-      rotation: [0, 0, 0], dragX: 0, dragY: 0, depth: 0, seed: actors.length * 1.7, spin: 0
+      rotation: [0, 0, 0], dragX: 0, dragY: 0, depth: 0, seed: actors.length * 1.7, spin: 0, impactAt: -Infinity
     }, options);
     group.traverse(function (object) { object.userData.actor = actor; });
     actors.push(actor);
     scene.add(group);
     return actor;
+  }
+
+  function screenPoint(x, y, depth) {
+    var point = new THREE.Vector3(x / width * 2 - 1, 1 - y / height * 2, 0.5).unproject(camera);
+    var direction = point.sub(camera.position).normalize();
+    return camera.position.clone().add(direction.multiplyScalar((depth - camera.position.z) / direction.z));
+  }
+
+  function updateTitle() {
+    if (!titleBuilt || !titleGroup || !titleHero) return;
+    var heroRect = titleHero.getBoundingClientRect();
+    var inner = titleHero.querySelector('.hero__inner');
+    var opacity = inner && inner.style.opacity !== '' ? Number(inner.style.opacity) : 1;
+    opacity = Number.isFinite(opacity) ? clamp(opacity, 0, 1) : 1;
+    titleGroup.visible = heroRect.bottom > 0 && heroRect.top < height && opacity > 0.02;
+    if (!titleGroup.visible) return;
+    var p = paused() ? 1 : clamp((elapsed - titleStart) / 1.15, 0, 1);
+    var entrance = 1 - Math.pow(1 - p, 3);
+    var age = elapsed - titleActor.impactAt;
+    var bounce = age < 1.8 && !paused() ? Math.sin(age * 17) * Math.exp(-age * 4) : 0;
+    var reveal = opacity * (paused() ? 1 : clamp(p * 5, 0.35, 1));
+    titleMaterials.forEach(function (material) { material.opacity = reveal; });
+    titleShadows.forEach(function (material) { material.opacity = reveal * 0.1; });
+    titleLines.forEach(function (line, index) {
+      var rect = line.element.getBoundingClientRect();
+      var textRect = line.range.getBoundingClientRect();
+      var fontSize = parseFloat(getComputedStyle(line.element).fontSize) || rect.height;
+      var availableWidth = Math.min(textRect.width || rect.width, width - 32);
+      var pixelHeight = Math.min(fontSize * 0.78, rect.height * 0.94);
+      var centerX = textRect.width ? textRect.left + textRect.width / 2 : rect.left + rect.width / 2;
+      var centerY = rect.top + rect.height / 2;
+      var center = screenPoint(centerX, centerY, 2.65);
+      var left = screenPoint(centerX - availableWidth / 2, centerY, 2.65);
+      var right = screenPoint(centerX + availableWidth / 2, centerY, 2.65);
+      var upper = screenPoint(centerX, centerY - pixelHeight / 2, 2.65);
+      var lower = screenPoint(centerX, centerY + pixelHeight / 2, 2.65);
+      var scale = Math.min(left.distanceTo(right) / line.naturalWidth, upper.distanceTo(lower) / line.naturalHeight);
+      line.group.position.copy(center);
+      if (!paused()) line.group.position.y += Math.sin(elapsed * 0.65 + index * 0.7) * 0.015;
+      line.group.position.z -= (1 - entrance) * 3.4;
+      line.group.scale.setScalar(scale * (1 + bounce * 0.075));
+      line.group.rotation.set(
+        0.1 + titleActor.dragX - pointerSmooth.y * 0.17 - (1 - entrance) * 0.48 + bounce * 0.1,
+        (index ? 0.055 : -0.07) + titleActor.dragY + pointerSmooth.x * 0.18 + (1 - entrance) * 0.2,
+        bounce * 0.025
+      );
+    });
+  }
+
+  async function loadTitle() {
+    var owned = [];
+    function titleKeep(resource) { owned.push(resource); return keep(resource); }
+    try {
+      var elements = Array.prototype.slice.call(document.querySelectorAll('.hero__line'));
+      if (!titleHero || elements.length !== 2) return;
+      var modules = await Promise.all([
+        import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/FontLoader.js'),
+        import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/geometries/TextGeometry.js')
+      ]);
+      var font = await new modules[0].FontLoader().loadAsync('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json');
+      if (disposed || !canvas.isConnected) return;
+      var mobile = width <= 820 || !finePointer.matches;
+      var colors = [0xff4da6, 0x995de8, 0x24badd];
+      var faces = colors.map(function (color) {
+        return titleKeep(new THREE.MeshPhysicalMaterial({ color: color, roughness: 0.24, metalness: 0.19, clearcoat: 1, clearcoatRoughness: 0.14, transparent: true }));
+      });
+      var side = titleKeep(new THREE.MeshPhysicalMaterial({ color: 0x703393, roughness: 0.28, metalness: 0.35, clearcoat: 0.7, transparent: true }));
+      titleMaterials = faces.concat([side]);
+      titleGroup = new THREE.Group();
+      titleActor.group = titleGroup;
+      var wordIndex = 0;
+      elements.forEach(function (element) {
+        var group = new THREE.Group();
+        var content = new THREE.Group();
+        var cursor = 0;
+        var minY = Infinity;
+        var maxY = -Infinity;
+        var faceElement = element.querySelector('.hero__face') || element;
+        var words = (element.getAttribute('data-text') || faceElement.textContent).trim().split(/\s+/);
+        words.forEach(function (word) {
+          var geometry = titleKeep(new modules[1].TextGeometry(word, {
+            font: font, size: 1, height: 0.32, curveSegments: mobile ? 4 : 6,
+            bevelEnabled: true, bevelSegments: mobile ? 2 : 3, bevelThickness: 0.045, bevelSize: 0.026, steps: 1
+          }));
+          geometry.translate(0, 0, -0.16);
+          geometry.computeBoundingBox();
+          var box = geometry.boundingBox;
+          var mesh = new THREE.Mesh(geometry, [faces[wordIndex % faces.length], side]);
+          mesh.position.x = cursor - box.min.x;
+          mesh.castShadow = true;
+          mesh.userData.actor = titleActor;
+          content.add(mesh);
+          cursor += box.max.x - box.min.x + 0.34;
+          minY = Math.min(minY, box.min.y);
+          maxY = Math.max(maxY, box.max.y);
+          wordIndex++;
+        });
+        var naturalWidth = cursor - 0.34;
+        var naturalHeight = maxY - minY;
+        var centerY = (minY + maxY) / 2;
+        content.position.set(-naturalWidth / 2, -centerY, 0);
+        var shadowMaterial = titleKeep(new THREE.ShadowMaterial({ color: 0x6a337e, opacity: 0.1, depthWrite: false }));
+        titleShadows.push(shadowMaterial);
+        var shadow = new THREE.Mesh(titleKeep(new THREE.PlaneGeometry(naturalWidth + 3, naturalHeight + 3)), shadowMaterial);
+        shadow.position.set(naturalWidth / 2, centerY, -0.38);
+        shadow.receiveShadow = true;
+        shadow.raycast = function () {};
+        content.add(shadow);
+        group.add(content);
+        titleGroup.add(group);
+        var range = document.createRange();
+        range.selectNodeContents(faceElement);
+        removers.push(function () { if (range.detach) range.detach(); });
+        titleLines.push({ group: group, element: element, range: range, naturalWidth: naturalWidth, naturalHeight: naturalHeight });
+      });
+      titleGroup.visible = false;
+      scene.add(titleGroup);
+      titleBuilt = true;
+      titleStart = paused() ? elapsed - 2 : elapsed - 0.12;
+      layoutDirty = true;
+      requestFrame();
+    } catch (error) {
+      if (titleGroup && scene) scene.remove(titleGroup);
+      titleGroup = null;
+      titleBuilt = false;
+      titleReady = false;
+      titleLines = [];
+      titleMaterials = [];
+      titleShadows = [];
+      root.removeAttribute('data-title3d');
+      owned.forEach(function (resource) { try { resource.dispose(); } catch (ignored) {} });
+    }
+  }
+
+  function buildBurst() {
+    var geometry = keep(new THREE.IcosahedronGeometry(0.07, 0));
+    var material = keep(new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3, metalness: 0.35 }));
+    burstMesh = new THREE.InstancedMesh(geometry, material, 24);
+    burstMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    burstMesh.frustumCulled = false;
+    burstMesh.visible = false;
+    burstDummy = new THREE.Object3D();
+    scene.add(burstMesh);
+  }
+
+  function impact(actor, point) {
+    actor.impactAt = elapsed;
+    var origin = point || (actor.isTitle && titleLines.length ? titleLines[0].group.position : actor.group.position);
+    var count = width <= 820 ? 12 : 20;
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      var angle = i / count * Math.PI * 2;
+      particles.push({
+        position: origin.clone(), velocity: new THREE.Vector3(Math.cos(angle) * (0.8 + Math.random()), Math.sin(angle) * (0.8 + Math.random()), (Math.random() - 0.5) * 1.8),
+        start: elapsed, life: 0.8 + Math.random() * 0.35, seed: Math.random() * 6
+      });
+      burstMesh.setColorAt(i, new THREE.Color([0xff6cbd, 0xf4c36b, 0xb49be9, 0x4fcadf][i % 4]));
+    }
+    if (burstMesh.instanceColor) burstMesh.instanceColor.needsUpdate = true;
+    requestFrame();
+  }
+
+  function updateBurst() {
+    if (!burstMesh || !particles.length) { if (burstMesh) burstMesh.visible = false; return; }
+    var live = 0;
+    particles.forEach(function (particle) {
+      var age = elapsed - particle.start;
+      if (age >= particle.life) return;
+      var progress = age / particle.life;
+      burstDummy.position.copy(particle.position).addScaledVector(particle.velocity, age);
+      burstDummy.position.y -= age * age * 0.8;
+      burstDummy.rotation.set(age * 4 + particle.seed, age * 5, particle.seed);
+      burstDummy.scale.setScalar((1 - progress) * 0.9);
+      burstDummy.updateMatrix();
+      burstMesh.setMatrixAt(live++, burstDummy.matrix);
+    });
+    burstMesh.count = live;
+    burstMesh.visible = live > 0;
+    burstMesh.instanceMatrix.needsUpdate = true;
+    if (!live) particles = [];
+  }
+
+  function replay() {
+    if (paused() || !ready || disposed) return;
+    introStart = elapsed;
+    titleStart = elapsed;
+    resetInteraction();
+    titleActor.dragX = 0;
+    titleActor.dragY = 0;
+    titleActor.impactAt = -Infinity;
+    actors.forEach(function (actor) { actor.dragX = 0; actor.dragY = 0; actor.impactAt = -Infinity; });
+    particles = [];
+    requestFrame();
   }
 
   function environment() {
@@ -321,7 +573,7 @@
     heartGeometry.center();
     var heart = new THREE.Group();
     heart.add(new THREE.Mesh(heartGeometry, [pink, heartEdge]));
-    addActor(heart, { cover: [0.8, -0.02], worlds: [0.89, 0.26], orbit: [0.73, 0.03], rotation: [0.08, -0.34, -0.14], baseSize: 0.83, depth: 0.4 });
+    addActor(heart, { cover: [0.86, -0.03], worlds: [0.89, 0.26], orbit: [0.73, 0.03], rotation: [0.08, -0.34, -0.14], baseSize: 0.98, depth: 0.4 });
 
     var orbit = new THREE.Group();
     var ringGeometry = keep(new THREE.TorusGeometry(1.05, 0.065, 12, 80));
@@ -335,7 +587,7 @@
     var satellite = new THREE.Mesh(satelliteGeometry, pearl);
     satellite.position.set(1.01, 0.24, 0.02);
     orbit.add(satellite);
-    addActor(orbit, { cover: [-0.86, 0.29], worlds: [-0.91, -0.17], orbit: [-0.76, 0.1], rotation: [0.2, 0.3, -0.22], baseSize: 1.05, depth: -0.25, spin: 0.11 });
+    addActor(orbit, { cover: [-0.9, 0.34], worlds: [-0.91, -0.17], orbit: [-0.76, 0.1], rotation: [0.2, 0.3, -0.22], baseSize: 1.18, depth: -0.25, spin: 0.11 });
 
     var gem = new THREE.Group();
     var gemGeometry = keep(new THREE.OctahedronGeometry(0.7, 0));
@@ -357,6 +609,8 @@
   }
 
   function connectEvents() {
+    var replayButton = document.getElementById('replayEntrance');
+    if (replayButton) listen(replayButton, 'click', replay);
     listen(window, 'scroll', function () { layoutDirty = true; requestFrame(); }, { passive: true });
     listen(window, 'resize', function () { layoutDirty = true; resetInteraction(); syncMotion(); }, { passive: true });
     listen(window, 'pointermove', pointerMove, { passive: true });
@@ -414,6 +668,8 @@
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.08;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.setClearColor(0x000000, 0);
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(38, 1, 0.1, 60);
@@ -425,6 +681,15 @@
       scene.add(new THREE.AmbientLight(0xffefff, 1.1));
       var key = new THREE.DirectionalLight(0xfff3df, 3.2);
       key.position.set(-4, 7, 9);
+      key.castShadow = true;
+      key.shadow.mapSize.set(window.innerWidth <= 820 ? 512 : 1024, window.innerWidth <= 820 ? 512 : 1024);
+      key.shadow.camera.left = -12;
+      key.shadow.camera.right = 12;
+      key.shadow.camera.top = 10;
+      key.shadow.camera.bottom = -10;
+      key.shadow.camera.near = 0.5;
+      key.shadow.camera.far = 40;
+      key.shadow.bias = -0.0005;
       scene.add(key);
       var rim = new THREE.DirectionalLight(0xbba1ff, 2.2);
       rim.position.set(6, -2, 5);
@@ -435,12 +700,14 @@
       layout();
       environment();
       buildObjects();
+      buildBurst();
       layoutDirty = true;
       draw(false, 0);
       ready = true;
       setStatus('ready');
       connectEvents();
       syncMotion();
+      loadTitle();
     } catch (error) {
       fallback();
     }

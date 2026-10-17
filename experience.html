@@ -29,8 +29,11 @@
 <link rel="icon" type="image/jpg" href="images/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="experience.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -49,23 +52,29 @@
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <img class="hero__portrait" id="heroPhoto" src="images/emma-ballet.jpg" alt="Emma posing in her pink ballet outfit" width="1500" height="2000" fetchpriority="high" loading="eager" decoding="async">
+  <img class="hero__portrait" id="heroPhoto" src="images/emma-ballet.jpg" alt="Emma posing in her pink ballet outfit" width="1500" height="2000" fetchpriority="high" loading="eager" decoding="async" draggable="false">
   <div class="hero__scrim"></div>
   <div class="hero__ambient hero__ambient--one" aria-hidden="true"></div>
   <div class="hero__ambient hero__ambient--two" aria-hidden="true"></div>
-  <div class="hero__meta"><span>01 / A world of possibility</span><span class="interaction-hint">Move to explore · Drag to turn</span></div>
+  <div class="hero__portal" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="hero__meta"><span>01 / A world of possibility</span><span class="interaction-hint">Move to explore · Drag or tap the magic</span></div>
   <button class="motion-toggle" id="motionToggle" type="button" aria-pressed="false" hidden>Pause motion</button>
   <div class="hero__inner">
     <div class="hero__scene">
+      <div class="hero__entrance">
       <p class="kicker">Emma's Play World</p>
+      <div class="hero__rig">
       <h1 class="hero__title" aria-label="Love Creates Harmony">
         <span class="hero__line" data-text="Love Creates" aria-hidden="true"><span class="hero__face">Love Creates</span></span>
         <span class="hero__line" data-text="Harmony" aria-hidden="true"><span class="hero__face">Harmony</span></span>
       </h1>
+      </div>
       <p class="hero__sub">Free videos for ages 4–12. Dance, create and discover kindness together with a parent.</p>
       <div class="hero__actions"><a class="btn btn--main" href="/#watch">Watch Emma <span aria-hidden="true">↗</span></a><a class="btn hero__explore" href="#worlds">Explore Worlds <span aria-hidden="true">↓</span></a></div>
+      </div>
     </div>
   </div>
+  <button class="hero__replay" id="replayEntrance" type="button" aria-label="Replay the opening animation" hidden><span class="hero__replay-icon" aria-hidden="true">↻</span><span>Replay the magic</span></button>
   <a class="scrollcue" href="#worlds" aria-label="Scroll to the Four Worlds">Scroll to discover<span aria-hidden="true"></span></a>
 </section>
 

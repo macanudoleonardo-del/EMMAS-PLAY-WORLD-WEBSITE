@@ -6,6 +6,10 @@
   var pointerPreference = window.matchMedia ? window.matchMedia("(hover: hover) and (pointer: fine)") : null;
   var paused = !!(preference && preference.matches);
   var control = document.getElementById("motionToggle");
+  var replay = document.getElementById("replayEntrance");
+  var hero = document.getElementById("hero");
+  var entrance = document.querySelector(".hero__entrance");
+  var rig = document.querySelector(".hero__rig");
   var videos = document.querySelectorAll("video.feature__bg");
   var surfaces = document.querySelectorAll(".card__surface");
   var progress = document.getElementById("scrollProgress");
@@ -15,6 +19,10 @@
   var wide = innerWidth > 820;
   var animationContext = null;
   var heroCamera = null;
+  var entranceContext = null;
+  var entranceFailed = false;
+  var titleObserver = null;
+  var titleWasReady = root.getAttribute("data-title3d") === "ready";
   var lenis = null;
   var lenisTick = null;
   var videoObserver = null;
@@ -22,6 +30,10 @@
   var tiltFrame = null;
   var tiltTarget = null;
   var tiltPoint = null;
+  var rigFrame = null;
+  var rigLastTime = 0;
+  var rigTarget = { x: 0, y: 0, z: 0 };
+  var rigCurrent = { x: 0, y: 0, z: 0 };
   var canvas = document.getElementById("sparks");
   var context = null;
   var width = 0;
@@ -36,6 +48,115 @@
     if (!query) return;
     if (query.addEventListener) query.addEventListener("change", callback);
     else if (query.addListener) query.addListener(callback);
+  }
+
+  function titleIsReady() {
+    return root.getAttribute("data-title3d") === "ready";
+  }
+
+  function syncReplayAvailability() {
+    if (!replay) return;
+    var fallbackReady = entrance && !entranceFailed && window.gsap && window.gsap.context && window.gsap.fromTo;
+    replay.hidden = paused || !(titleIsReady() || fallbackReady);
+    replay.disabled = paused;
+  }
+
+  function clearEntrance() {
+    if (entranceContext) {
+      var previous = entranceContext;
+      entranceContext = null;
+      try { previous.revert(); } catch (error) {}
+    }
+    if (entrance) {
+      entrance.style.removeProperty("opacity");
+      entrance.style.removeProperty("transform");
+    }
+  }
+
+  function playEntrance() {
+    clearEntrance();
+    if (paused || document.hidden || titleIsReady() || !entrance || !window.gsap || !window.gsap.context || !window.gsap.fromTo) return;
+    var rect = hero && hero.getBoundingClientRect();
+    if (rect && (rect.bottom <= 0 || rect.top >= innerHeight)) return;
+    try {
+      entranceContext = window.gsap.context(function () {});
+      entranceContext.add(function () {
+        window.gsap.fromTo(entrance, {
+          opacity: 0, y: 28, rotationX: -3, transformPerspective: 1200, transformOrigin: "50% 35%"
+        }, {
+          opacity: 1, y: 0, rotationX: 0, duration: 1.35, ease: "power3.out", clearProps: "opacity,transform"
+        });
+      });
+    } catch (error) {
+      entranceFailed = true;
+      clearEntrance();
+      syncReplayAvailability();
+    }
+  }
+
+  function writeRig() {
+    if (!rig) return;
+    rig.style.setProperty("--rig-x", rigCurrent.x.toFixed(3) + "deg");
+    rig.style.setProperty("--rig-y", rigCurrent.y.toFixed(3) + "deg");
+    rig.style.setProperty("--rig-z", rigCurrent.z.toFixed(3) + "px");
+  }
+
+  function resetRig() {
+    if (rigFrame !== null) cancelAnimationFrame(rigFrame);
+    rigFrame = null;
+    rigLastTime = 0;
+    rigTarget.x = rigTarget.y = rigTarget.z = 0;
+    rigCurrent.x = rigCurrent.y = rigCurrent.z = 0;
+    writeRig();
+  }
+
+  function stepRig(time) {
+    rigFrame = null;
+    if (!canTilt() || titleIsReady() || !rig) { resetRig(); return; }
+    var delta = rigLastTime ? Math.max(.001, Math.min((time - rigLastTime) / 1000, .05)) : 1 / 60;
+    rigLastTime = time;
+    var follow = 1 - Math.exp(-delta * 16);
+    rigCurrent.x += (rigTarget.x - rigCurrent.x) * follow;
+    rigCurrent.y += (rigTarget.y - rigCurrent.y) * follow;
+    rigCurrent.z += (rigTarget.z - rigCurrent.z) * follow;
+    var settled = Math.abs(rigTarget.x - rigCurrent.x) < .02 && Math.abs(rigTarget.y - rigCurrent.y) < .02 && Math.abs(rigTarget.z - rigCurrent.z) < .04;
+    if (settled) {
+      rigCurrent.x = rigTarget.x;
+      rigCurrent.y = rigTarget.y;
+      rigCurrent.z = rigTarget.z;
+    }
+    writeRig();
+    if (!settled) rigFrame = requestAnimationFrame(stepRig);
+    else rigLastTime = 0;
+  }
+
+  if (hero && rig) {
+    hero.addEventListener("pointermove", function (event) {
+      if (!canTilt() || titleIsReady() || event.pointerType === "touch") return;
+      var rect = hero.getBoundingClientRect();
+      if (!rect.width || !rect.height || rect.bottom <= 0 || rect.top >= innerHeight) return;
+      var x = Math.max(-1, Math.min(1, (event.clientX - rect.left) / rect.width * 2 - 1));
+      var y = Math.max(-1, Math.min(1, (event.clientY - rect.top) / rect.height * 2 - 1));
+      rigTarget.x = -y * 6;
+      rigTarget.y = x * 9;
+      rigTarget.z = (1 - Math.min(1, Math.sqrt(x * x + y * y))) * 24;
+      if (rigFrame === null) rigFrame = requestAnimationFrame(stepRig);
+    }, { passive: true });
+    hero.addEventListener("pointerleave", resetRig);
+    hero.addEventListener("pointercancel", resetRig);
+    addEventListener("blur", resetRig);
+  }
+
+  function syncTitleState() {
+    var ready = titleIsReady();
+    if (ready) { clearEntrance(); resetRig(); }
+    else if (titleWasReady && !paused && !document.hidden) playEntrance();
+    titleWasReady = ready;
+    syncReplayAvailability();
+  }
+  if (window.MutationObserver) {
+    titleObserver = new window.MutationObserver(syncTitleState);
+    titleObserver.observe(root, { attributes: true, attributeFilter: ["data-title3d"] });
   }
 
   function makeParticle() {
@@ -143,6 +264,7 @@
     tiltTarget = null;
     tiltPoint = null;
     surfaces.forEach(resetSurface);
+    resetRig();
   }
 
   function canTilt() {
@@ -277,8 +399,10 @@
       control.setAttribute("aria-pressed", String(paused));
     }
     resetTilt();
+    clearEntrance();
     clearAnimations();
-    if (!paused) animate();
+    if (!paused) { animate(); playEntrance(); }
+    syncReplayAvailability();
     syncVideos();
     syncParticles();
     requestScrollUpdate();
@@ -308,9 +432,11 @@
       if (scrollFrame !== null) cancelAnimationFrame(scrollFrame);
       scrollFrame = null;
       resetTilt();
+      clearEntrance();
       clearAnimations();
     } else {
       if (!paused && !animationContext) animate();
+      if (!paused) playEntrance();
       requestScrollUpdate();
     }
     syncVideos();
@@ -319,6 +445,8 @@
 
   addEventListener("resize", function () {
     sizeParticles();
+    resetRig();
+    clearEntrance();
     if (wide !== (innerWidth > 820)) {
       wide = innerWidth > 820;
       resetTilt();
@@ -401,6 +529,14 @@
     followFragment();
     requestScrollUpdate();
   });
+
+  if (replay) {
+    replay.addEventListener("click", function () {
+      if (paused) return;
+      if (hero) scrollToTarget(hero, false);
+      if (!titleIsReady()) playEntrance();
+    });
+  }
 
   sizeParticles();
   setMotion(paused);
