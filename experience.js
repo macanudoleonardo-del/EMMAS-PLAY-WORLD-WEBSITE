@@ -2,6 +2,7 @@
   "use strict";
 
   var root = document.documentElement;
+  root.setAttribute("data-page-visibility", document.hidden ? "hidden" : "visible");
   var preference = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   var pointerPreference = window.matchMedia ? window.matchMedia("(hover: hover) and (pointer: fine)") : null;
   var paused = !!(preference && preference.matches);
@@ -428,6 +429,7 @@
   }, { passive: true });
 
   document.addEventListener("visibilitychange", function () {
+    root.setAttribute("data-page-visibility", document.hidden ? "hidden" : "visible");
     if (document.hidden) {
       if (scrollFrame !== null) cancelAnimationFrame(scrollFrame);
       scrollFrame = null;

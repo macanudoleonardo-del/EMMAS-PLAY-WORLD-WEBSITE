@@ -52,6 +52,20 @@
   var titleBuilt = false;
   var titleHero = document.getElementById('hero');
   var titleActor = { isTitle: true, dragX: 0, dragY: 0, impactAt: -Infinity };
+  var titleInner = titleHero && titleHero.querySelector('.hero__inner');
+  var titleMetricsDirty = true;
+  var titleFontDirty = true;
+  var titleMeasureUntil = 0;
+  var titleNextMeasure = 0;
+  var heroBounds = { top: 0, bottom: 0, height: 0 };
+  var flowGroup;
+  var flowOrbits = [];
+  var flowMaterials = [];
+  var flowBeads;
+  var flowDummy;
+  var flowAnchor;
+  var flowRadius = 1;
+  var flowActor = { isFlow: true, dragX: 0, dragY: 0, impactAt: -Infinity };
   var burstMesh;
   var burstDummy;
   var particles = [];
@@ -145,6 +159,20 @@
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
     }
+    if (titleHero) {
+      var heroRect = titleHero.getBoundingClientRect();
+      heroBounds.top = heroRect.top;
+      heroBounds.bottom = heroRect.bottom;
+      heroBounds.height = heroRect.height || heroRect.bottom - heroRect.top;
+    }
+    titleMetricsDirty = true;
+    if (flowGroup) {
+      var halfFlowHeight = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * (camera.position.z + 1.5);
+      flowRadius = Math.min(width * (mobile ? 0.43 : 0.35), height * 0.62) * halfFlowHeight * 2 / height;
+      flowBeads.count = mobile ? 9 : 12;
+      for (var m = 0; m < flowMaterials.length; m++) flowMaterials[m].opacity = mobile ? 0.5 : 0.72;
+      flowBeads.material.opacity = mobile ? 0.8 : 0.96;
+    }
 
     var worlds = document.getElementById('worlds');
     worldsMix = worlds ? clamp((height - worlds.getBoundingClientRect().top) / (height * 1.2), 0, 1) : 0;
@@ -165,6 +193,8 @@
       var halfHeight = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * depth;
       actor.target.set(nx * halfHeight * camera.aspect, ny * halfHeight, actor.depth);
       actor.size = actor.baseSize * (mobile ? Math.min(0.62, (width / height) * 0.8) : 1);
+      actor.loopX = halfHeight * camera.aspect * (mobile ? 0.04 : 0.055);
+      actor.loopY = halfHeight * (mobile ? 0.085 : 0.115);
     });
     layoutDirty = false;
   }
@@ -181,11 +211,15 @@
     var arrival = 1 - Math.pow(1 - intro, 3);
 
     actors.forEach(function (actor) {
-      actor.group.position.lerp(actor.target, follow);
-      if (animated) actor.group.position.y += Math.sin(elapsed * 0.65 + actor.seed) * 0.1 * follow;
+      var path = elapsed * (0.42 + actor.seed * 0.02) + actor.seed;
+      actor.motionTarget.copy(actor.target);
+      actor.motionTarget.x += Math.sin(path) * actor.loopX * arrival;
+      actor.motionTarget.y += Math.sin(path * 2 + actor.seed) * actor.loopY * arrival;
+      actor.motionTarget.z += Math.cos(path) * 0.28 * arrival;
+      actor.group.position.lerp(actor.motionTarget, follow);
       var spread = (1 - arrival) * (actor.seed % 2 ? -1 : 1);
       actor.group.position.x += (actor.target.x >= 0 ? 1 : -1) * (1 - arrival) * 0.15;
-      actor.group.position.z = actor.depth - (1 - arrival) * 4.8;
+      actor.group.position.z = actor.motionTarget.z - (1 - arrival) * 4.8;
       var age = elapsed - actor.impactAt;
       var kick = age < 2.2 && !paused() ? Math.sin(age * 17) * Math.exp(-age * 3.7) : 0;
       var impactSpin = age < 2.2 && !paused() ? Math.PI * 2 * (1 - Math.exp(-age * 4.5)) : 0;
@@ -199,12 +233,13 @@
       );
     });
     updateTitle();
+    updateFlow(arrival);
     updateBurst();
     renderer.render(scene, camera);
     if (titleBuilt && !titleReady && titleGroup.visible && !document.hidden) {
       titleReady = true;
       root.setAttribute('data-title3d', 'ready');
-      Promise.resolve().then(function () { layoutDirty = true; requestFrame(); });
+      Promise.resolve().then(function () { layoutDirty = true; titleMetricsDirty = true; titleNextMeasure = 0; requestFrame(); });
     }
   }
 
@@ -236,6 +271,9 @@
 
   function syncMotion() {
     stopFrames();
+    layoutDirty = true;
+    titleMetricsDirty = true;
+    titleNextMeasure = 0;
     if (paused()) {
       resetInteraction();
       introStart = elapsed - 2;
@@ -244,6 +282,7 @@
       if (burstMesh) burstMesh.visible = false;
       actors.forEach(function (actor) { actor.impactAt = -Infinity; });
       titleActor.impactAt = -Infinity;
+      flowActor.impactAt = -Infinity;
     }
     canvas.style.visibility = inView ? 'visible' : 'hidden';
     requestFrame();
@@ -264,6 +303,7 @@
     camera.updateMatrixWorld(true);
     raycaster.setFromCamera(rayPointer, camera);
     var groups = actors.map(function (actor) { return actor.group; });
+    if (flowGroup && flowGroup.visible) groups.push(flowGroup);
     if (titleReady && titleGroup && titleGroup.visible) groups.push(titleGroup);
     var hits = raycaster.intersectObjects(groups, true);
     lastHitPoint = hits.length && hits[0].point ? hits[0].point.clone() : null;
@@ -284,6 +324,10 @@
       if (dragging.actor.isTitle) {
         dragging.actor.dragX = clamp(dragging.actor.dragX, -0.25, 0.25);
         dragging.actor.dragY = clamp(dragging.actor.dragY, -0.3, 0.3);
+      }
+      if (dragging.actor.isFlow) {
+        dragging.actor.dragX = clamp(dragging.actor.dragX, -0.16, 0.16);
+        dragging.actor.dragY = clamp(dragging.actor.dragY, -0.22, 0.22);
       }
       dragging.x = event.clientX;
       dragging.y = event.clientY;
@@ -322,7 +366,7 @@
 
   function addActor(group, options) {
     var actor = Object.assign({
-      group: group, target: new THREE.Vector3(), size: 1, baseSize: 1,
+      group: group, target: new THREE.Vector3(), motionTarget: new THREE.Vector3(), size: 1, baseSize: 1, loopX: 0, loopY: 0,
       rotation: [0, 0, 0], dragX: 0, dragY: 0, depth: 0, seed: actors.length * 1.7, spin: 0, impactAt: -Infinity
     }, options);
     group.traverse(function (object) { object.userData.actor = actor; });
@@ -331,20 +375,35 @@
     return actor;
   }
 
-  function screenPoint(x, y, depth) {
-    var point = new THREE.Vector3(x / width * 2 - 1, 1 - y / height * 2, 0.5).unproject(camera);
-    var direction = point.sub(camera.position).normalize();
-    return camera.position.clone().add(direction.multiplyScalar((depth - camera.position.z) / direction.z));
+  function screenPoint(x, y, depth, target) {
+    target.set(x / width * 2 - 1, 1 - y / height * 2, 0.5).unproject(camera).sub(camera.position);
+    return target.multiplyScalar((depth - camera.position.z) / target.z).add(camera.position);
+  }
+
+  function measureTitle() {
+    for (var i = 0; i < titleLines.length; i++) {
+      var line = titleLines[i];
+      var rect = line.element.getBoundingClientRect();
+      var textRect = line.range.getBoundingClientRect();
+      if (titleFontDirty || !line.fontSize) line.fontSize = parseFloat(getComputedStyle(line.element).fontSize) || rect.height;
+      line.width = Math.min(textRect.width || rect.width, width - 32);
+      line.height = Math.min(line.fontSize * 0.78, rect.height * 0.94);
+      line.centerX = textRect.width ? textRect.left + textRect.width / 2 : rect.left + rect.width / 2;
+      line.centerY = rect.top + rect.height / 2;
+    }
+    titleMetricsDirty = false;
+    titleFontDirty = false;
+    titleNextMeasure = performance.now() + 100;
   }
 
   function updateTitle() {
     if (!titleBuilt || !titleGroup || !titleHero) return;
-    var heroRect = titleHero.getBoundingClientRect();
-    var inner = titleHero.querySelector('.hero__inner');
-    var opacity = inner && inner.style.opacity !== '' ? Number(inner.style.opacity) : 1;
+    var opacity = titleInner && titleInner.style.opacity !== '' ? Number(titleInner.style.opacity) : 1;
     opacity = Number.isFinite(opacity) ? clamp(opacity, 0, 1) : 1;
-    titleGroup.visible = heroRect.bottom > 0 && heroRect.top < height && opacity > 0.02;
+    titleGroup.visible = heroBounds.bottom > 0 && heroBounds.top < height && opacity > 0.02;
     if (!titleGroup.visible) return;
+    var now = performance.now();
+    if ((titleMetricsDirty || now < titleMeasureUntil) && now >= titleNextMeasure) measureTitle();
     var p = paused() ? 1 : clamp((elapsed - titleStart) / 1.15, 0, 1);
     var entrance = 1 - Math.pow(1 - p, 3);
     var age = elapsed - titleActor.impactAt;
@@ -353,27 +412,21 @@
     titleMaterials.forEach(function (material) { material.opacity = reveal; });
     titleShadows.forEach(function (material) { material.opacity = reveal * 0.1; });
     titleLines.forEach(function (line, index) {
-      var rect = line.element.getBoundingClientRect();
-      var textRect = line.range.getBoundingClientRect();
-      var fontSize = parseFloat(getComputedStyle(line.element).fontSize) || rect.height;
-      var availableWidth = Math.min(textRect.width || rect.width, width - 32);
-      var pixelHeight = Math.min(fontSize * 0.78, rect.height * 0.94);
-      var centerX = textRect.width ? textRect.left + textRect.width / 2 : rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-      var center = screenPoint(centerX, centerY, 2.65);
-      var left = screenPoint(centerX - availableWidth / 2, centerY, 2.65);
-      var right = screenPoint(centerX + availableWidth / 2, centerY, 2.65);
-      var upper = screenPoint(centerX, centerY - pixelHeight / 2, 2.65);
-      var lower = screenPoint(centerX, centerY + pixelHeight / 2, 2.65);
+      if (!line.width || !line.height) return;
+      var center = screenPoint(line.centerX, line.centerY, 2.65, line.projected[0]);
+      var left = screenPoint(line.centerX - line.width / 2, line.centerY, 2.65, line.projected[1]);
+      var right = screenPoint(line.centerX + line.width / 2, line.centerY, 2.65, line.projected[2]);
+      var upper = screenPoint(line.centerX, line.centerY - line.height / 2, 2.65, line.projected[3]);
+      var lower = screenPoint(line.centerX, line.centerY + line.height / 2, 2.65, line.projected[4]);
       var scale = Math.min(left.distanceTo(right) / line.naturalWidth, upper.distanceTo(lower) / line.naturalHeight);
       line.group.position.copy(center);
-      if (!paused()) line.group.position.y += Math.sin(elapsed * 0.65 + index * 0.7) * 0.015;
+      if (!paused()) line.group.position.y += Math.sin(elapsed * 0.65 + index * 0.7) * 0.055;
       line.group.position.z -= (1 - entrance) * 3.4;
       line.group.scale.setScalar(scale * (1 + bounce * 0.075));
       line.group.rotation.set(
-        0.1 + titleActor.dragX - pointerSmooth.y * 0.17 - (1 - entrance) * 0.48 + bounce * 0.1,
-        (index ? 0.055 : -0.07) + titleActor.dragY + pointerSmooth.x * 0.18 + (1 - entrance) * 0.2,
-        bounce * 0.025
+        0.1 + titleActor.dragX - pointerSmooth.y * 0.17 - (1 - entrance) * 0.48 + bounce * 0.1 + (paused() ? 0 : Math.sin(elapsed * 0.62 + index * 0.6) * 0.055),
+        (index ? 0.055 : -0.07) + titleActor.dragY + pointerSmooth.x * 0.18 + (1 - entrance) * 0.2 + (paused() ? 0 : Math.sin(elapsed * 0.48 + index * 0.8) * 0.07),
+        bounce * 0.025 + (paused() ? 0 : Math.sin(elapsed * 0.39 + index) * 0.012)
       );
     });
   }
@@ -442,13 +495,17 @@
         var range = document.createRange();
         range.selectNodeContents(faceElement);
         removers.push(function () { if (range.detach) range.detach(); });
-        titleLines.push({ group: group, element: element, range: range, naturalWidth: naturalWidth, naturalHeight: naturalHeight });
+        titleLines.push({ group: group, element: element, range: range, naturalWidth: naturalWidth, naturalHeight: naturalHeight,
+          width: 0, height: 0, fontSize: 0, centerX: 0, centerY: 0,
+          projected: [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()] });
       });
       titleGroup.visible = false;
       scene.add(titleGroup);
       titleBuilt = true;
       titleStart = paused() ? elapsed - 2 : elapsed - 0.12;
       layoutDirty = true;
+      titleFontDirty = true;
+      titleNextMeasure = 0;
       requestFrame();
     } catch (error) {
       if (titleGroup && scene) scene.remove(titleGroup);
@@ -461,6 +518,106 @@
       root.removeAttribute('data-title3d');
       owned.forEach(function (resource) { try { resource.dispose(); } catch (ignored) {} });
     }
+  }
+
+  function buildFlow() {
+    flowGroup = new THREE.Group();
+    flowActor.group = flowGroup;
+    flowAnchor = new THREE.Vector3();
+    var ribbon = keep(new THREE.TorusGeometry(1, 0.015, 8, 96));
+    var colors = [0xefbf69, 0xf6a6d3, 0xb8a1e7];
+    var settings = [
+      { radius: 1, flat: 0.24, mobileFlat: 0.3, tilt: 0.65, turn: -0.08, speed: 0.38 },
+      { radius: 0.87, flat: 0.34, mobileFlat: 0.38, tilt: -0.55, turn: 0.075, speed: -0.46 },
+      { radius: 1.08, flat: 0.18, mobileFlat: 0.23, tilt: 0.85, turn: 0.025, speed: 0.29 }
+    ];
+    for (var i = 0; i < 3; i++) {
+      var material = keep(new THREE.MeshPhysicalMaterial({
+        color: colors[i], roughness: 0.24, metalness: 0.58, clearcoat: 1,
+        clearcoatRoughness: 0.18, transparent: true, opacity: 0.72, depthWrite: false
+      }));
+      flowMaterials.push(material);
+      var group = new THREE.Group();
+      var ring = new THREE.Mesh(ribbon, material);
+      ring.userData.actor = flowActor;
+      group.add(ring);
+      flowGroup.add(group);
+      settings[i].group = group;
+      flowOrbits.push(settings[i]);
+    }
+    var beadGeometry = keep(new THREE.SphereGeometry(1, 14, 10));
+    var beadMaterial = keep(new THREE.MeshPhysicalMaterial({
+      color: 0xffffff, metalness: 0.22, roughness: 0.2, clearcoat: 1,
+      iridescence: 0.25, transparent: true, opacity: 0.96, depthWrite: false
+    }));
+    flowBeads = keep(new THREE.InstancedMesh(beadGeometry, beadMaterial, 12));
+    flowBeads.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    flowBeads.frustumCulled = false;
+    flowBeads.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1.5);
+    flowBeads.userData.actor = flowActor;
+    var palette = [0xffe3f3, 0xf2d7a6, 0xd7c6f2, 0xc7eaf2];
+    for (var bead = 0; bead < 12; bead++) flowBeads.setColorAt(bead, new THREE.Color(palette[bead % palette.length]));
+    if (flowBeads.instanceColor) flowBeads.instanceColor.needsUpdate = true;
+    flowDummy = new THREE.Object3D();
+    flowGroup.add(flowBeads);
+    flowGroup.visible = false;
+    scene.add(flowGroup);
+  }
+
+  function updateFlow(arrival) {
+    if (!flowGroup || !titleHero) return;
+    var opacity = titleInner && titleInner.style.opacity !== '' ? Number(titleInner.style.opacity) : 1;
+    opacity = Number.isFinite(opacity) ? clamp(opacity, 0, 1) : 1;
+    flowGroup.visible = heroBounds.bottom > 0 && heroBounds.top < height && opacity > 0.02;
+    if (!flowGroup.visible) return;
+    var mobile = width <= 820 || !finePointer.matches;
+    var phase = elapsed;
+    var age = elapsed - flowActor.impactAt;
+    var spring = age < 2 && !paused() ? Math.sin(age * 15) * Math.exp(-age * 3.4) : 0;
+    var hover = hovered === flowActor && !paused() ? 0.025 : 0;
+    var centerY = heroBounds.top + heroBounds.height * (mobile ? 0.225 : 0.255);
+    if (mobile && titleBuilt) {
+      var titleCenters = 0;
+      var measuredLines = 0;
+      for (var lineIndex = 0; lineIndex < titleLines.length; lineIndex++) {
+        if (titleLines[lineIndex].width > 0) {
+          titleCenters += titleLines[lineIndex].centerY;
+          measuredLines++;
+        }
+      }
+      if (measuredLines) centerY = titleCenters / measuredLines;
+    }
+    screenPoint(width / 2, centerY, -1.5, flowAnchor);
+    flowGroup.position.copy(flowAnchor);
+    flowGroup.scale.setScalar(flowRadius * (0.82 + arrival * 0.18) * (1 + spring * 0.09 + hover));
+    flowGroup.rotation.set(
+      flowActor.dragX - pointerSmooth.y * 0.055,
+      flowActor.dragY + pointerSmooth.x * 0.075,
+      Math.sin(phase * 0.21) * 0.018 + spring * 0.035
+    );
+    for (var orbitIndex = 0; orbitIndex < flowOrbits.length; orbitIndex++) {
+      var orbit = flowOrbits[orbitIndex];
+      orbit.group.rotation.set(
+        orbit.tilt + Math.sin(phase * 0.31 + orbitIndex * 1.7) * 0.12,
+        Math.cos(phase * 0.24 + orbitIndex) * 0.08,
+        orbit.turn + Math.sin(phase * 0.19 + orbitIndex) * 0.025
+      );
+      orbit.group.scale.set(orbit.radius, orbit.radius * (mobile ? orbit.mobileFlat : orbit.flat), orbit.radius);
+      orbit.group.updateMatrix();
+      flowMaterials[orbitIndex].opacity = (mobile ? 0.5 : 0.72) * opacity;
+    }
+    var seats = flowBeads.count / 3;
+    for (var instance = 0; instance < flowBeads.count; instance++) {
+      var path = flowOrbits[instance % 3];
+      var angle = phase * path.speed + Math.floor(instance / 3) / seats * Math.PI * 2 + instance % 3 * 0.7;
+      flowDummy.position.set(Math.cos(angle), Math.sin(angle), 0).applyMatrix4(path.group.matrix);
+      flowDummy.rotation.set(angle, angle * 0.6, 0);
+      flowDummy.scale.setScalar((instance < 3 ? 0.034 : 0.023) * (1 + Math.sin(phase * 1.3 + instance) * 0.1));
+      flowDummy.updateMatrix();
+      flowBeads.setMatrixAt(instance, flowDummy.matrix);
+    }
+    flowBeads.material.opacity = (mobile ? 0.8 : 0.96) * opacity;
+    flowBeads.instanceMatrix.needsUpdate = true;
   }
 
   function buildBurst() {
@@ -519,6 +676,9 @@
     titleActor.dragX = 0;
     titleActor.dragY = 0;
     titleActor.impactAt = -Infinity;
+    flowActor.dragX = 0;
+    flowActor.dragY = 0;
+    flowActor.impactAt = -Infinity;
     actors.forEach(function (actor) { actor.dragX = 0; actor.dragY = 0; actor.impactAt = -Infinity; });
     particles = [];
     requestFrame();
@@ -612,8 +772,19 @@
   function connectEvents() {
     var replayButton = document.getElementById('replayEntrance');
     if (replayButton) listen(replayButton, 'click', replay);
-    listen(window, 'scroll', function () { layoutDirty = true; requestFrame(); }, { passive: true });
-    listen(window, 'resize', function () { layoutDirty = true; resetInteraction(); syncMotion(); }, { passive: true });
+    listen(window, 'scroll', function () {
+      layoutDirty = true;
+      titleMetricsDirty = true;
+      titleMeasureUntil = performance.now() + 1000;
+      requestFrame();
+    }, { passive: true });
+    listen(window, 'resize', function () {
+      titleFontDirty = true;
+      titleMeasureUntil = performance.now() + 1000;
+      layoutDirty = true;
+      resetInteraction();
+      syncMotion();
+    }, { passive: true });
     listen(window, 'pointermove', pointerMove, { passive: true });
     listen(window, 'pointerdown', pointerDown, { passive: true });
     listen(window, 'pointerup', pointerUp, { passive: true });
@@ -631,7 +802,7 @@
     motionObserver = new MutationObserver(syncMotion);
     motionObserver.observe(root, { attributes: true, attributeFilter: ['data-motion'] });
     [reduceMotion, finePointer].forEach(function (query) {
-      var changed = function () { layoutDirty = true; resetInteraction(); syncMotion(); };
+      var changed = function () { layoutDirty = true; titleFontDirty = true; resetInteraction(); syncMotion(); };
       if (query.addEventListener) {
         listen(query, 'change', changed);
       } else if (query.addListener) {
@@ -639,6 +810,18 @@
         removers.push(function () { query.removeListener(changed); });
       }
     });
+    if (document.fonts && document.fonts.ready) {
+      var fontsChanged = function () {
+        if (disposed) return;
+        titleFontDirty = true;
+        titleMetricsDirty = true;
+        titleNextMeasure = 0;
+        layoutDirty = true;
+        requestFrame();
+      };
+      document.fonts.ready.then(fontsChanged, function () {});
+      if (document.fonts.addEventListener) listen(document.fonts, 'loadingdone', fontsChanged);
+    }
 
     var sections = Array.prototype.slice.call(document.querySelectorAll('main section'));
     if ('IntersectionObserver' in window && sections.length) {
@@ -701,6 +884,7 @@
       layout();
       environment();
       buildObjects();
+      buildFlow();
       buildBurst();
       layoutDirty = true;
       draw(false, 0);
