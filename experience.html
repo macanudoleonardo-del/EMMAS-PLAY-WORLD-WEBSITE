@@ -341,9 +341,11 @@
       }
       animationContext=gsap.context(function(){});
       animationContext.add(function(){
-        gsap.timeline({scrollTrigger:{trigger:"#hero",start:"top top",end:"+=100%",scrub:true,pin:innerWidth>820}})
-          .to(".hero__inner",{yPercent:-26,opacity:0,ease:"none"},0)
-          .to(".scrollcue",{opacity:0,ease:"none"},0);
+        if(innerWidth>820){
+          gsap.timeline({scrollTrigger:{trigger:"#hero",start:"top top",end:"+=100%",scrub:true,pin:true}})
+            .to(".hero__inner",{yPercent:-26,opacity:0,ease:"none"},0)
+            .to(".scrollcue",{opacity:0,ease:"none"},0);
+        }
         gsap.fromTo(".statement .w",{opacity:.12},{opacity:1,stagger:.08,ease:"none",
           scrollTrigger:{trigger:"#statement",start:"top 70%",end:"bottom 60%",scrub:true}});
         gsap.utils.toArray(".reveal").forEach(function(el){
